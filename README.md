@@ -2,7 +2,7 @@
 
 Our family Christmas list: wishes, gifts and who's getting what.
 
-- **Open the app:** https://zachdavies11.github.io/under-the-tree/
+- **Open the app:** https://zachdavies11.github.io/Under-The-Tree/
 - Enter the family code once, then pick your name.
 - On a phone, use **Add to Home Screen** to install it like an app.
 
