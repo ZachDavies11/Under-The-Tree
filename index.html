@@ -1,0 +1,1125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1C3A29">
+<meta name="description" content="Our family Christmas list: wishes, gifts and who's getting what.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
+<link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Under the Tree">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-size:14px}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+<title>Under the Tree</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: pine header band with countdown, tab bar, then one working column of gift-tag cards (max 980px). */
+:root{
+  --bg:#EDF2EE; --paper:#FBFCFA; --ink:#13261D; --muted:#596A60; --line:#D3DDD6;
+  --pine:#1D5A3C; --pine-deep:#123D29; --pine-soft:#DCEBE1; --on-pine:#F4F8F5;
+  --berry:#B0222D; --berry-soft:#F8E0E1; --on-berry:#FFFFFF;
+  --gold:#A87B1F; --gold-soft:#F4E9CD;
+  --snow:rgba(255,255,255,.16);
+  --c1:#B0222D; --c2:#1D6A8A; --c3:#7A4FA3; --c4:#A87B1F; --c5:#1D7A4A; --c6:#C2541B;
+  --shadow:0 1px 0 rgba(19,38,29,.06),0 6px 18px -10px rgba(19,38,29,.25);
+  --f-display:"Manrope","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --f-body:"Figtree","Segoe UI",system-ui,-apple-system,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--pine)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.wrap{max-width:980px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* Header band */
+.band{background:var(--pine);color:var(--on-pine);
+  background-image:radial-gradient(var(--snow) 1.2px,transparent 1.6px),radial-gradient(var(--snow) 1px,transparent 1.4px);
+  background-size:38px 38px,23px 23px;background-position:0 0,11px 17px}
+.band .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:22px 20px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:14px;min-width:0}
+.brand svg{flex:none}
+.brand h1{font-family:var(--f-display);font-weight:800;font-size:clamp(1.7rem,4.5vw,2.4rem);line-height:1;margin:0;letter-spacing:-.02em;text-wrap:balance}
+.brand p{margin:4px 0 0;opacity:.8;font-size:.9rem}
+.count{display:flex;align-items:center;gap:10px;background:var(--pine-deep);border-radius:14px;padding:8px 14px 8px 12px}
+.count b{font-family:var(--f-display);font-weight:800;font-size:2.1rem;line-height:1;color:var(--gold);font-variant-numeric:tabular-nums}
+.count span{font-size:.78rem;line-height:1.2;text-transform:uppercase;letter-spacing:.08em;opacity:.85}
+
+/* Tabs */
+.tabs{display:flex;gap:4px;padding-block:14px 4px;overflow-x:auto}
+.tabs a{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:999px;text-decoration:none;color:var(--muted);font-weight:600;white-space:nowrap}
+.tabs a:hover{background:var(--pine-soft);color:var(--ink)}
+.tabs a[aria-current="page"]{background:var(--ink);color:var(--bg)}
+.tabs .n{font-size:.75rem;background:var(--berry);color:var(--on-berry);border-radius:999px;padding:0 7px;line-height:1.5}
+
+/* Banner */
+.banner{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;background:var(--gold-soft);border:1px dashed var(--gold);border-radius:12px;padding:10px 14px;margin-top:10px;font-size:.9rem}
+.banner strong{font-weight:700}
+.banner .grow{flex:1 1 220px;min-width:0}
+.banner select{padding:6px 8px;border-radius:8px;border:1px solid var(--line);background:var(--paper)}
+
+main{padding-block:18px 64px}
+.view-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.view-head h2{font-family:var(--f-display);font-weight:800;font-size:1.65rem;line-height:1.1;margin:0;letter-spacing:-.01em;text-wrap:balance}
+.view-head p{margin:4px 0 0;color:var(--muted);max-width:60ch}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.stack{display:grid;gap:12px}
+.eyebrow{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:700;margin:22px 0 8px}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--paper);border-radius:10px;padding:8px 13px;font-weight:600;cursor:pointer;font-size:.9rem;text-decoration:none;color:var(--ink);white-space:nowrap}
+.btn:hover{border-color:var(--muted)}
+.btn.primary{background:var(--berry);border-color:var(--berry);color:var(--on-berry)}
+.btn.primary:hover{filter:brightness(1.07)}
+.btn.pine{background:var(--pine);border-color:var(--pine);color:var(--on-pine)}
+.btn.ghost{background:transparent;border-color:transparent;color:var(--muted);padding-inline:8px}
+.btn.ghost:hover{color:var(--ink);background:var(--pine-soft)}
+.btn.sm{padding:5px 10px;font-size:.82rem;border-radius:8px}
+
+/* Gift tag card */
+.tag{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 16px;background:var(--paper);border:1px solid var(--line);border-radius:6px 16px 16px 6px;padding:14px 16px 14px 34px;box-shadow:var(--shadow)}
+.tag::before{content:"";position:absolute;left:12px;top:20px;width:10px;height:10px;border-radius:50%;background:var(--bg);border:1.5px solid var(--line)}
+.tag::after{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;border-radius:6px 0 0 6px;background:var(--line)}
+.tag.p3::after{background:var(--berry)} .tag.p2::after{background:var(--gold)} .tag.p1::after{background:var(--pine-soft)}
+.tag.dim{opacity:.62}
+.tag h3{margin:2px 0 2px;font-size:1.05rem;font-weight:700;line-height:1.3;overflow-wrap:anywhere}
+.tag .note{margin:2px 0 0;color:var(--muted);font-size:.9rem;overflow-wrap:anywhere}
+.tag .meta{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:8px;font-size:.85rem;align-items:center}
+.price{font-family:var(--f-mono);font-weight:500;font-variant-numeric:tabular-nums}
+.tag-top{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.tag-side{display:flex;flex-direction:column;align-items:flex-end;gap:6px;justify-content:center}
+@media (max-width:620px){.tag{grid-template-columns:minmax(0,1fr)}.tag-side{align-items:center;justify-content:flex-start;flex-direction:row;flex-wrap:wrap}}
+
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border-radius:999px;padding:2px 9px;background:var(--pine-soft);color:var(--ink)}
+.chip.p3{background:var(--berry-soft);color:var(--berry)}
+.chip.p2{background:var(--gold-soft);color:var(--gold)}
+.chip.secret{background:var(--ink);color:var(--bg)}
+.chip.taken{background:var(--pine-soft);color:var(--ink)}
+.chip.warn{background:var(--berry-soft);color:var(--berry)}
+
+/* status stepper */
+.steps{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--bg)}
+.steps button{border:0;background:transparent;padding:5px 9px;font-size:.78rem;font-weight:600;cursor:pointer;color:var(--muted);white-space:nowrap}
+.steps button+button{border-left:1px solid var(--line)}
+.steps button.done{background:var(--pine-soft);color:var(--ink)}
+.steps button.on{background:var(--pine);color:var(--on-pine)}
+
+/* Panels */
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:16px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px 18px;margin:0}
+.facts div{min-width:0}
+.facts dt{font-size:.7rem;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:700}
+.facts dd{margin:2px 0 0;font-weight:600;overflow-wrap:anywhere}
+.facts .wide{grid-column:1/-1}
+.panel-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap}
+.panel-head h3{margin:0;font-family:var(--f-display);font-size:1.15rem;font-weight:800}
+
+.tip{display:flex;gap:10px;align-items:flex-start;font-size:.88rem;color:var(--muted);padding:12px 14px;border-radius:12px;border:1px dashed var(--line);margin-top:18px}
+.tip svg{flex:none;margin-top:2px}
+
+/* Family grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.person{display:flex;flex-direction:column;gap:10px;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:16px;text-decoration:none;color:var(--ink);box-shadow:var(--shadow);transition:transform .15s ease}
+.person:hover{transform:translateY(-2px);border-color:var(--muted)}
+.person .who{display:flex;align-items:center;gap:10px}
+.person h3{margin:0;font-size:1.1rem;font-weight:700}
+.person .small{font-size:.82rem;color:var(--muted)}
+.av{flex:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-display);font-weight:800;color:#fff;font-size:1.05rem}
+.av.lg{width:52px;height:52px;font-size:1.4rem}
+.bar{height:7px;border-radius:999px;background:var(--bg);overflow:hidden;border:1px solid var(--line)}
+.bar i{display:block;height:100%;background:var(--pine);border-radius:999px}
+.bar.over i{background:var(--berry)}
+.person .foot{display:flex;justify-content:space-between;font-size:.82rem;color:var(--muted);gap:8px}
+
+/* Filters */
+.filters{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:14px 0}
+.fchip{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:5px 12px;font-size:.84rem;font-weight:600;cursor:pointer;color:var(--muted)}
+.fchip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.filters select{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:5px 10px;font-size:.84rem;margin-left:auto}
+
+/* Summary tiles (shopping) */
+.sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:6px}
+.sum div{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.sum b{display:block;font-family:var(--f-display);font-size:1.6rem;font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums}
+.sum span{font-size:.78rem;color:var(--muted)}
+.gline{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 14px;padding:12px 0;border-top:1px solid var(--line);align-items:center}
+.gline:first-of-type{border-top:0}
+.gline .t{font-weight:600;overflow-wrap:anywhere}
+.gline .s{font-size:.82rem;color:var(--muted)}
+.gline input{width:100%;border:1px solid var(--line);border-radius:8px;padding:6px 9px;background:var(--bg);font-size:.85rem;margin-top:6px}
+@media (max-width:620px){.gline{grid-template-columns:minmax(0,1fr)}}
+.budget{display:flex;align-items:center;gap:8px;font-size:.85rem;color:var(--muted)}
+.budget input{width:90px;border:1px solid var(--line);border-radius:8px;padding:5px 8px;background:var(--bg);font-family:var(--f-mono)}
+.needs{display:flex;flex-wrap:wrap;gap:8px}
+
+/* Forms / sheet */
+.overlay{position:fixed;inset:0;background:rgba(10,20,15,.5);display:flex;align-items:flex-end;justify-content:center;z-index:50;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) 0 env(safe-area-inset-left,0px)}
+@media (min-width:640px){.overlay{align-items:center}}
+.sheet{background:var(--paper);color:var(--ink);width:min(560px,100%);max-height:92%;overflow:auto;border-radius:20px 20px 0 0;padding:20px 20px calc(20px + env(safe-area-inset-bottom,0px))}
+@media (min-width:640px){.sheet{border-radius:20px}}
+.sheet h3{font-family:var(--f-display);font-weight:800;font-size:1.35rem;margin:0 0 4px}
+.sheet .lead{color:var(--muted);margin:0 0 14px;font-size:.9rem}
+.field{display:grid;gap:5px;margin-bottom:12px}
+.field label,.field legend{font-size:.8rem;font-weight:700;color:var(--muted)}
+.field input,.field textarea,.field select{border:1px solid var(--line);border-radius:10px;padding:9px 11px;background:var(--bg);width:100%}
+.field textarea{min-height:70px;resize:vertical}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+fieldset{border:0;padding:0;margin:0 0 12px}
+.radios{display:flex;gap:6px;flex-wrap:wrap}
+.radios label{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:6px 12px;cursor:pointer;font-weight:600;font-size:.85rem;color:var(--ink)}
+.radios input{accent-color:var(--berry)}
+.actions{display:flex;justify-content:flex-end;gap:8px;margin-top:6px;flex-wrap:wrap}
+.copybox{width:100%;min-height:200px;font-family:var(--f-mono);font-size:.82rem;border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--bg)}
+
+.empty{text-align:center;padding:36px 16px;color:var(--muted);border:1.5px dashed var(--line);border-radius:16px}
+.empty h3{color:var(--ink);font-family:var(--f-display);font-size:1.25rem;margin:8px 0 4px}
+.join{max-width:520px;margin:10px auto 0}
+.join .pick{display:grid;gap:8px;margin:12px 0 18px}
+.join .pick button{display:flex;align-items:center;gap:10px;text-align:left;width:100%}
+
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(18px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-weight:600;font-size:.9rem;z-index:60;max-width:calc(100% - 32px);box-shadow:var(--shadow)}
+.muted{color:var(--muted)}
+.back{display:inline-flex;align-items:center;gap:4px;color:var(--muted);text-decoration:none;font-weight:600;font-size:.88rem;margin-bottom:10px}
+.back:hover{color:var(--ink)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ===== Refined pass: calmer, more professional surface ===== */
+:root{--radius:12px;--shadow:0 1px 2px rgba(19,38,29,.05)}
+.band{background-image:none;border-bottom:1px solid var(--pine-deep)}
+.band .wrap{padding-block:18px}
+.brand{gap:12px}
+.brand h1{font-size:clamp(1.45rem,3.6vw,1.85rem);font-weight:800;letter-spacing:-.025em}
+.brand p{font-size:.85rem;margin-top:3px;opacity:.75}
+.count{background:transparent;border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:6px 14px;gap:8px}
+.count b{font-size:1.25rem;color:var(--on-pine)}
+.count span{font-size:.8rem;text-transform:none;letter-spacing:0;line-height:1.2;opacity:.8}
+.count span br{display:none}
+
+.tabs{gap:22px;padding-block:0;border-bottom:1px solid var(--line);margin-top:6px}
+.tabs a{padding:14px 0 12px;border-radius:0;border-bottom:2px solid transparent;margin-bottom:-1px;font-size:.93rem}
+.tabs a:hover{background:transparent;color:var(--ink)}
+.tabs a[aria-current="page"]{background:transparent;color:var(--ink);border-bottom-color:var(--pine)}
+.tabs .n{background:var(--pine-soft);color:var(--ink);font-weight:700}
+
+.banner{border-style:solid;border-color:var(--line);background:var(--paper);margin-top:16px;border-radius:var(--radius)}
+main{padding-block:24px 72px}
+.view-head{margin-bottom:18px;align-items:center}
+.view-head h2{font-size:1.5rem;letter-spacing:-.02em}
+.view-head p{font-size:.92rem}
+.eyebrow{text-transform:none;letter-spacing:0;font-size:.85rem;font-weight:700;color:var(--ink);margin:28px 0 10px}
+
+.btn{border-radius:9px;font-weight:600}
+.btn.primary{background:var(--pine);border-color:var(--pine);color:var(--on-pine)}
+.btn.primary:hover{filter:none;background:var(--pine-deep);border-color:var(--pine-deep)}
+
+.tag{border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow);gap:12px 20px}
+.tag::before,.tag::after{display:none}
+.tag h3{font-size:1rem;font-weight:650;margin:6px 0 2px}
+.tag .meta{margin-top:10px;gap:6px 16px}
+.chip{text-transform:none;letter-spacing:0;font-size:.76rem;font-weight:600;padding:2px 9px;gap:6px}
+.chip.p1,.chip.p2,.chip.p3{background:transparent;padding-left:0;color:var(--muted)}
+.chip.p1::before,.chip.p2::before,.chip.p3::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--line)}
+.chip.p3::before{background:var(--berry)} .chip.p2::before{background:var(--gold)} .chip.p1::before{background:var(--muted);opacity:.5}
+.chip.p3{color:var(--berry)}
+
+.panel,.person,.sum div{border-radius:var(--radius);box-shadow:none}
+.person:hover{transform:none;border-color:var(--muted)}
+.facts dt{text-transform:none;letter-spacing:0;font-size:.78rem;font-weight:600}
+.facts dd{font-weight:500}
+.steps{border-radius:8px}
+.tip{border-style:solid;background:var(--paper)}
+.fchip{font-weight:500}
+.empty{border-style:solid;background:var(--paper)}
+.empty h3{font-size:1.1rem}
+.sum b{font-size:1.4rem}
+
+/* Add-a-wish sheet */
+.sheet{padding:0;display:flex;flex-direction:column;width:min(520px,100%)}
+.sheet-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:20px 22px 14px;border-bottom:1px solid var(--line)}
+.sheet-head h3{font-size:1.15rem;margin:0}
+.sheet-head p{margin:3px 0 0;color:var(--muted);font-size:.86rem}
+.xbtn{flex:none;width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:transparent;cursor:pointer;display:grid;place-items:center;color:var(--muted)}
+.xbtn:hover{color:var(--ink);border-color:var(--muted)}
+.sheet-body{padding:18px 22px 6px;overflow:auto}
+.sheet-foot{display:flex;align-items:center;gap:8px;padding:14px 22px calc(16px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);background:var(--paper)}
+.sheet-foot .sp{flex:1}
+.sheet form{display:contents}
+.sheet .field select{border:1px solid var(--line);border-radius:9px;padding:10px 12px;background:var(--paper);width:100%}
+.sheet .field{gap:6px;margin-bottom:16px}
+.sheet .field label,.sheet .field legend{font-size:.82rem;font-weight:600;color:var(--ink);display:flex;justify-content:space-between;width:100%}
+.sheet .field label .opt,.sheet .field legend .opt{color:var(--muted);font-weight:500}
+.sheet .field input,.sheet .field textarea{background:var(--paper);border-radius:9px;padding:10px 12px}
+.sheet .field input:focus,.sheet .field textarea:focus{outline:none;border-color:var(--pine);box-shadow:0 0 0 3px var(--pine-soft)}
+.sheet .title-input{font-size:1.05rem;font-weight:600}
+.money-in{position:relative}
+.money-in span{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-family:var(--f-mono);font-size:.9rem;pointer-events:none}
+.money-in input{padding-left:calc(14px + var(--cw,1ch))!important;font-family:var(--f-mono)}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:9px;padding:3px;gap:3px;background:var(--bg)}
+.seg label{position:relative;display:flex;align-items:center;justify-content:center;gap:7px;padding:8px 6px;border-radius:7px;cursor:pointer;font-size:.85rem;font-weight:600;color:var(--muted);text-align:center}
+.seg input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.seg label i{width:7px;height:7px;border-radius:50%;flex:none}
+.seg label:has(input:checked){background:var(--paper);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.seg label:has(input:focus-visible){outline:2px solid var(--pine);outline-offset:1px}
+.sheet .seg label{justify-content:center;width:auto;font-weight:600;color:var(--muted)}
+.sheet .seg label:has(input:checked){color:var(--ink)}
+.sheet legend{padding:0;margin-bottom:6px}
+.hint{font-size:.78rem;color:var(--muted);margin-top:-2px}
+@media (max-width:460px){.sheet .two{grid-template-columns:1fr}}
+.tag-body{display:flex;gap:16px;align-items:flex-start;min-width:0}
+.thumb{flex:none;width:64px;height:64px;border-radius:10px;background:var(--bg);border:1px solid var(--line);display:grid;place-items:center;font-size:32px;line-height:1}
+@media (max-width:460px){.thumb{width:48px;height:48px;font-size:24px}.tag-body{gap:12px}}
+
+/* ===== Festive theme (single look, deliberately) ===== */
+:root{
+  --page:#1C3A29; --page-deep:#132A1D; --on-page:#F7EEDB; --on-page-muted:rgba(247,238,219,.76);
+  --paper:#FCF6E9; --bg:#F3E8D0; --ink:#2E241D; --muted:#7B6858; --line:#E6D6B6;
+  --pine:#2E6B47; --pine-deep:#21503A; --pine-soft:#E2ECD9; --on-pine:#FFFFFF;
+  --berry:#B92B3C; --berry-deep:#8F1F2D; --berry-soft:#F8D9DE; --on-berry:#FFFFFF;
+  --gold:#D9A93F; --gold-soft:#F7E8C2; --blush:#F7D5DB; --shelf:#5B3B23;
+  --radius:16px; --shadow:0 2px 0 rgba(0,0,0,.12),0 12px 26px -16px rgba(0,0,0,.7);
+  --f-display:"Fredoka","Nunito","Trebuchet MS",system-ui,sans-serif;
+  --f-body:"Nunito","Segoe UI",system-ui,-apple-system,sans-serif;
+  color-scheme:light;
+}
+body{background-color:var(--page);background-image:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'><g fill='none' stroke='%23C9A55A' stroke-opacity='.22' stroke-width='1.6' stroke-linecap='round'><path d='M18 70c14-34 62-38 72-8 7 22-14 38-30 30-12-6-8-24 6-22'/><path d='M90 62c22 8 40 30 30 56'/><path d='M150 170c-10-30 20-56 48-44 20 9 18 36 0 40-14 3-20-14-8-20'/><path d='M150 170c-6 22-30 34-52 28'/><path d='M200 40c-20 6-26 28-12 38 10 7 22-2 18-12'/><path d='M30 200c18-8 40 0 44 18'/></g><g fill='%23D9B866' fill-opacity='.28'><path d='M128 24l3 7 7 3-7 3-3 7-3-7-7-3 7-3z'/><path d='M60 140l2 5 5 2-5 2-2 5-2-5-5-2 5-2z'/><path d='M214 214l2 5 5 2-5 2-2 5-2-5-5-2 5-2z'/></g><g fill='%23C9A55A' fill-opacity='.25'><circle cx='112' cy='120' r='2'/><circle cx='20' cy='20' r='1.6'/><circle cx='226' cy='110' r='1.8'/></g></svg>");background-size:240px 240px;color:var(--on-page);font-family:var(--f-body)}
+a{color:var(--pine)}
+:focus-visible{outline-color:var(--gold)}
+
+.band{background:transparent;border:0}
+.band .wrap{padding-block:22px 4px}
+.brand h1{font-family:var(--f-display);font-weight:700;color:var(--on-page);font-size:clamp(1.8rem,5vw,2.4rem);letter-spacing:0}
+.brand p{color:var(--on-page-muted);opacity:1;font-weight:600}
+.count{background:var(--paper);color:var(--ink);border:2px solid var(--gold);box-shadow:var(--shadow);padding:6px 14px}
+.count b{color:var(--berry);font-family:var(--f-display);font-weight:700;font-size:1.4rem}
+.count span{opacity:1;color:var(--ink);font-weight:700}
+
+/* bottom menu */
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:40;margin:0;border:0;justify-content:center;gap:4px;overflow:visible;
+  background:var(--berry);border-radius:24px 24px 0 0;box-shadow:0 -8px 24px rgba(0,0,0,.35);
+  padding:9px max(16px,env(safe-area-inset-right,0px)) calc(9px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.tabs::before{content:"";position:absolute;left:6px;right:6px;top:5px;bottom:calc(5px + env(safe-area-inset-bottom,0px));border:1.5px dashed rgba(255,255,255,.38);border-radius:19px;pointer-events:none}
+.tabs a{flex:1 1 0;max-width:170px;flex-direction:column;gap:3px;padding:6px 4px 5px;margin:0;border:0;border-radius:14px;color:rgba(255,255,255,.85);font-weight:800;font-size:.8rem;position:relative;justify-content:center}
+.tabs a .ic{font-size:1.75rem;line-height:1;transition:transform .15s ease}
+.tabs a:hover{color:#fff;background:rgba(0,0,0,.1)}
+.tabs a[aria-current="page"]{color:#fff;background:rgba(0,0,0,.2);border:0}
+.tabs a[aria-current="page"] .ic{transform:translateY(-2px) scale(1.1)}
+.tabs .n{position:absolute;top:1px;left:calc(50% + 8px);background:var(--gold);color:var(--ink);font-weight:800}
+main{padding-block:16px calc(118px + env(safe-area-inset-bottom,0px))}
+
+/* text sitting on the green */
+.view-head h2{font-family:var(--f-display);font-weight:700;color:var(--on-page);font-size:1.7rem;letter-spacing:0}
+.view-head p{color:var(--on-page-muted)}
+.eyebrow{color:var(--on-page);font-family:var(--f-display);font-weight:600;font-size:1.05rem;margin:26px 0 10px}
+.back{color:var(--on-page-muted)} .back:hover{color:var(--on-page)}
+#view > .muted{color:var(--on-page-muted)}
+.ribbon{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-display);font-weight:600;font-size:1.15rem;color:var(--on-page);background:var(--page-deep);border:1.5px solid var(--gold);border-radius:999px;padding:6px 16px;margin:8px 0 18px}
+
+/* cream surfaces */
+.panel,.tag,.sum div,.empty,.tip,.banner,.join{background:var(--paper);color:var(--ink);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:var(--radius)}
+.tip{border-style:solid}
+.panel-head h3,.sheet h3,.empty h3,.join h2{font-family:var(--f-display);font-weight:600}
+.facts dt{color:var(--muted)}
+.empty{color:var(--muted)}
+
+/* buttons */
+.btn{border-radius:12px;font-weight:800;background:var(--paper);border-color:var(--line);color:var(--ink)}
+.btn.primary{background:var(--berry);border-color:var(--berry-deep);color:#fff;outline:1.5px dashed rgba(255,255,255,.55);outline-offset:-5px;box-shadow:0 3px 0 var(--berry-deep)}
+.btn.primary:not(.sm){padding:11px 20px}
+.btn.primary:hover{background:var(--berry-deep);border-color:var(--berry-deep)}
+.btn.primary:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.btn.ghost{background:transparent;border-color:transparent;color:var(--muted)}
+.fchip{background:var(--paper);color:var(--ink);border-color:transparent;font-weight:700}
+.fchip[aria-pressed="true"]{background:var(--berry);color:#fff;border-color:var(--berry)}
+.filters select{background:var(--paper);color:var(--ink);border-color:transparent;font-weight:700}
+
+/* wishes */
+.tag{border-radius:18px}
+.tag h3{font-family:var(--f-display);font-weight:600;font-size:1.1rem}
+.thumb{background:var(--blush);border:0;border-radius:50%;box-shadow:inset 0 0 0 3px #fff}
+.chip.taken{background:var(--pine-soft)}
+.price{font-family:var(--f-body);font-weight:800}
+
+/* avatars & family cards */
+.av{background:var(--blush);color:var(--ink);font-size:1.3rem;box-shadow:inset 0 0 0 2px #fff}
+.av.lg{width:64px;height:64px;font-size:2rem;box-shadow:inset 0 0 0 3px #fff}
+.grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:26px 14px}
+.person{position:relative;align-items:center;text-align:center;gap:4px;padding:22px 12px 16px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:14px 14px 8px 8px;box-shadow:0 8px 0 -1px var(--shelf),0 16px 22px -12px rgba(0,0,0,.7)}
+.person:hover{transform:translateY(-2px);border-color:var(--gold)}
+.person h3{font-family:var(--f-display);color:var(--berry);font-weight:600;font-size:1.25rem;margin-top:6px}
+.person .small{color:var(--ink);font-weight:700;font-size:.88rem}
+.person .sub2{font-size:.75rem;color:var(--muted)}
+.person .bow{position:absolute;top:-14px;right:-8px;font-size:1.8rem;transform:rotate(14deg)}
+button.person{font:inherit;cursor:pointer;justify-content:center;border:3px dashed var(--berry)}
+.av.plus{color:var(--berry);font-weight:700;font-size:2.4rem;font-family:var(--f-display);background:var(--berry-soft)}
+
+/* My Wishes card */
+.wishcard{position:relative;background:var(--paper);color:var(--ink);border-radius:20px;padding:18px;box-shadow:var(--shadow);border:1px solid var(--line);margin-top:6px}
+.wc-head{display:flex;align-items:center;gap:12px;padding-right:96px}
+.wc-head h2{font-family:var(--f-display);font-weight:700;font-size:1.5rem;margin:0;line-height:1.1}
+.starbadge{position:relative;width:44px;height:44px;flex:none;display:grid;place-items:center}
+.starbadge svg{position:absolute;inset:0}
+.starbadge b{position:relative;font-family:var(--f-display);font-weight:700;font-size:.95rem;margin-top:3px}
+.stamp{position:absolute;top:-10px;right:14px;transform:rotate(8deg);background:var(--paper);border:2px dashed var(--berry);border-radius:6px;padding:7px 12px;font-family:var(--f-display);color:var(--berry);font-weight:600;font-size:.95rem;line-height:1.05;text-align:left;box-shadow:0 0 0 4px var(--paper),0 6px 14px rgba(0,0,0,.28)}
+.stamp small{display:block;font-size:.7rem;color:var(--muted)}
+.wc-sub{color:var(--muted);font-size:.86rem;margin:6px 0 0}
+.wc-list{list-style:none;margin:10px 0 0;padding:0}
+.wc-list li{display:flex;gap:10px;align-items:center;padding:9px 2px;border-bottom:1px solid var(--line);font-weight:700;min-width:0}
+.wc-list li::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:var(--muted)}
+.wc-list li span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wc-list li.more{color:var(--muted);font-weight:600}
+.quick{display:flex;align-items:center;gap:10px;border-bottom:1.5px solid var(--line);padding:10px 2px;margin-bottom:14px;color:var(--muted)}
+.quick input{flex:1;border:0;background:transparent;font-size:.98rem;outline:none;min-width:0;padding:2px 0}
+.quick:focus-within{border-bottom-color:var(--berry)}
+.wishcard .btn.primary{width:100%;justify-content:center;font-size:1.05rem}
+.charpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(46px,1fr));gap:10px}
+.sheet .charpick label{position:relative;display:grid;place-items:center;width:auto;aspect-ratio:1;border-radius:50%;background:var(--blush);cursor:pointer;font-size:1.55rem;box-shadow:inset 0 0 0 2px #fff;transition:transform .1s ease}
+.charpick input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.sheet .charpick label:has(input:checked){box-shadow:0 0 0 3px var(--berry),inset 0 0 0 2px #fff;transform:scale(1.07)}
+.sheet .charpick label:has(input:focus-visible){outline:2px solid var(--gold);outline-offset:4px}
+.panel .av{cursor:default}
+/* centre emoji characters exactly inside their circles */
+.av,.thumb,.charpick span{display:flex!important;align-items:center;justify-content:center;line-height:1!important;text-align:center;padding:0;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;font-variant-emoji:emoji}
+.sheet .charpick label{justify-content:center;align-content:center;grid-template-columns:100%;grid-template-rows:100%}
+.charpick span{width:100%;height:100%}
+.av.plus{font-family:var(--f-display);padding-bottom:3px}
+@media (max-width:460px){.wc-head{padding-right:84px}.wc-head h2{font-size:1.3rem}.grid{grid-template-columns:1fr 1fr}}
+
+/* size wheels */
+.wsec{margin:18px 0 8px;font-size:.82rem;font-weight:700;color:var(--ink);display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.wsec span{font-weight:500;color:var(--muted)}
+.wheels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.wheels.two-w{grid-template-columns:repeat(2,minmax(0,1fr))}
+.wheel-field{min-width:0}
+.wlabel{display:block;text-align:center;font-size:.78rem;font-weight:700;color:var(--muted);margin-bottom:4px}
+.wheel{position:relative;height:78px;overflow-y:auto;scroll-snap-type:y mandatory;border-radius:14px;background:var(--bg);border:1px solid var(--line);scrollbar-width:none;overscroll-behavior:contain;
+  -webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.3),#000 36%,#000 64%,rgba(0,0,0,.3));mask-image:linear-gradient(to bottom,rgba(0,0,0,.3),#000 36%,#000 64%,rgba(0,0,0,.3))}
+.wheel::-webkit-scrollbar{display:none}
+.wheel:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.wheel-track{padding-block:26px}
+.wi{height:26px;font-size:.82rem!important;display:flex;align-items:center;justify-content:center;scroll-snap-align:center;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap;font-size:.95rem;transition:color .1s,transform .1s}
+.wi.sel{color:var(--berry);font-weight:800;font-size:.9rem!important}
+.wheel-field{position:relative}
+.wheel-field::after{content:"";position:absolute;left:6px;right:6px;bottom:26px;height:26px;border-radius:8px;border:2px solid var(--berry);pointer-events:none;background:rgba(185,43,60,.06)}
+
+/* shopping sub-tabs */
+.subtabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--page-deep);border:1.5px solid var(--gold);border-radius:999px;padding:4px;margin:4px 0 18px}
+.subtabs a{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 8px;border-radius:999px;color:var(--on-page);font-weight:800;text-decoration:none;font-size:.92rem;white-space:nowrap}
+.subtabs a small{background:rgba(255,255,255,.16);border-radius:999px;padding:0 7px;font-size:.75rem}
+.subtabs a[aria-current="page"]{background:var(--paper);color:var(--berry)}
+.subtabs a[aria-current="page"] small{background:var(--berry-soft);color:var(--berry)}
+.mgroup{margin-top:22px}
+.mhead{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.mhead h3{margin:0;font-family:var(--f-display);font-weight:600;font-size:1.2rem;color:var(--on-page)}
+.mcount{color:var(--on-page-muted);font-size:.85rem;font-weight:700;margin-right:auto}
+.mempty{margin:0;color:var(--on-page-muted);font-size:.9rem}
+
+/* open market accordion */
+.mlist{display:grid;gap:12px}
+.mitem{border-radius:18px;box-shadow:var(--shadow)}
+.mrow{display:flex;align-items:center;gap:12px;width:100%;background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:18px;padding:12px 14px;font:inherit;cursor:pointer;text-align:left}
+.mrow:hover{border-color:var(--gold)}
+.mname{flex:1;min-width:0;font-family:var(--f-display);font-weight:600;font-size:1.2rem;color:var(--berry);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mnum{flex:none;background:var(--berry);color:#fff;font-weight:800;font-size:.82rem;border-radius:999px;padding:3px 11px}
+.mnum.zero{background:var(--bg);color:var(--muted)}
+.chev{flex:none;color:var(--muted);transition:transform .2s ease}
+.mitem.open .mrow{border-radius:18px 18px 0 0;border-bottom-color:transparent}
+.mitem.open .chev{transform:rotate(180deg)}
+.mdrawer{background:var(--bg);border:1px solid var(--line);border-top:0;border-radius:0 0 18px 18px;padding:12px;animation:drop .18s ease-out}
+.mdrawer .tag{box-shadow:none}
+.mdrawer .mempty{color:var(--muted);margin:4px 2px}
+.mlink{display:block;margin:12px 2px 2px;font-weight:700;font-size:.88rem;color:var(--pine)}
+@keyframes drop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.mdrawer{animation:none}}
+</style>
+</head>
+<body>
+
+<div class="band"><div class="wrap" id="head"></div></div>
+<div class="wrap">
+  <nav class="tabs" id="tabs" aria-label="Sections"></nav>
+  <div id="banner"></div>
+  <main id="view"><div class="empty"><h3>Opening the family list…</h3><p>Fetching everyone's wishes.</p></div></main>
+</div>
+<div class="overlay" id="overlay" hidden><div class="sheet" role="dialog" aria-modal="true" id="sheet"></div></div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script type="module">
+(function(){
+const $ = (s,r=document)=>r.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const newId = () => Date.now().toString(36) + Math.random().toString(36).slice(2,8);
+const STATUSES = [{k:'claimed',l:'Claimed'},{k:'bought',l:'Bought'},{k:'wrapped',l:'Wrapped'},{k:'tree',l:'Under the tree'}];
+const PRIOS = {3:{l:'Really want',c:'p3'},2:{l:'Would love',c:'p2'},1:{l:'Nice idea',c:'p1'}};
+
+const blank = () => ({people:{},wishes:{},claims:{},settings:{currency:'$'},priv:{budgets:{},notes:{}}});
+const S = {mode:'loading', live:blank(), demo:null, demoPriv:{}, meUid:null, viewAs:null, managing:null,
+  filter:'all', sort:'priority', route:'list', slow:false, readOnly:false, liveAvailable:false};
+let db = null;
+
+const D = () => S.mode === 'demo' ? S.demo : S.live;
+const P = id => D().people[id];
+function meId(){
+  if (S.mode === 'demo') return S.viewAs;
+  return S.myPid && S.live.people[S.myPid] ? S.myPid : null;
+}
+const cur = () => '$';
+const money = n => { n = Number(n)||0; return cur() + (Math.round(n) === n ? n.toLocaleString() : n.toFixed(2)); };
+const nameOf = id => (P(id) && P(id).name) || 'Someone';
+const possessive = n => n + (/s$/i.test(n) ? '’' : '’s');
+function colorOf(id){ let h=0; for (const c of String(id)) h = (h*31 + c.charCodeAt(0))>>>0; return 'var(--c'+(h%6+1)+')'; }
+const CHARS = ['🎅','🧸','🦌','⛄','🧝','🐧','🍪','🦊','🤶','🐻'];
+const PICKS = ['🎅','🤶','🧝','👼','🧸','🦌','⛄','🐧','🍪','🎄','⭐','🦊','🐻','🐼','🐰','🐱','🐶','🦉','🦄','🐻‍❄️'];
+function charPicker(cur, legend){ return `<fieldset class="field"><legend>${legend}</legend><div class="charpick">${PICKS.map((c,i)=>`<label><input type="radio" name="char" value="${c}" ${c===cur?'checked':''} aria-label="Character ${i+1}"><span aria-hidden="true">${c}</span></label>`).join('')}</div></fieldset>`; }
+function charOf(id){ if (P(id) && P(id).char) return P(id).char; const ids = Object.keys(D().people).sort((a,b)=>((P(a).createdAt||0)-(P(b).createdAt||0)) || a.localeCompare(b)); const i = ids.indexOf(id); return CHARS[(i<0?0:i) % CHARS.length]; }
+const av = (id, lg) => `<span class="av${lg?' lg':''}" aria-hidden="true">${charOf(id)}</span>`;
+const STAR = '<svg viewBox="0 0 44 44" aria-hidden="true"><path d="M22 3 L26.5 15.5 L40 16 L29.5 24.3 L33.2 37.5 L22 29.8 L10.8 37.5 L14.5 24.3 L4 16 L17.5 15.5 Z" fill="var(--gold)" stroke="#B88A2A" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+const hostOf = u => { try { return new URL(u).hostname.replace(/^www\./,''); } catch { return 'link'; } };
+const safeUrl = u => /^https?:\/\//i.test(u||'') ? u : '';
+/* Picks a picture for a wish from the words in its name. Order matters: specific before general. */
+const ICONS = [
+  ['photo ?book|picture frame|frame','🖼️'],['gift ?card|voucher','🎫'],['lego|building set|bricks?','🧱'],['dinosaur|t\\.? ?rex','🦖'],
+  ['jigsaw|puzzle','🧩'],['board ?game|card game|playing cards|dice','🎲'],['playstation|xbox|nintendo|video ?game|console|ps5','🎮'],
+  ['teddy|plush|soft toy|toy','🧸'],['drone|remote control|rc car','🚁'],
+  ['vinyl|record player|soundtrack|album','💿'],['headphones?|earbuds?|airpods|speaker','🎧'],['guitar|piano|ukulele|keyboard piano|drums?|violin','🎸'],
+  ['camera|film|lens|polaroid','📷'],['iphone|phone|ipad|tablet|kindle','📱'],['laptop|computer|keyboard|mouse|monitor|charger','💻'],['smart ?watch|watch','⌚'],
+  ['books?|novels?|cookbook|biography','📚'],
+  ['socks?','🧦'],['sneakers?|shoes?|trainers?|boots?|slippers?|runners','👟'],['gloves?|mittens?','🧤'],['scarf|beanie','🧣'],['hat|cap','🧢'],
+  ['jacket|coat|parka|vest','🧥'],['dress|skirt','👗'],['jeans|pants|trousers|shorts|leggings','👖'],['pyjamas|pajamas|robe|dressing gown','🥋'],
+  ['shirt|t-?shirt|tee|top|jumper|sweater|hoodie|cardigan|jersey','👕'],['backpack|bag|wallet|purse|handbag|tote','👜'],
+  ['rings?|necklace|earrings?|bracelet|jewell?ery|pendant','💍'],['perfume|cologne|fragrance','🌸'],['makeup|lipstick|skincare|serum|moisturi[sz]er|nail polish','💄'],
+  ['bikes?|bicycle|cycling|velodrome|helmet','🚲'],['soccer|football|shin pads?','⚽'],['basketball','🏀'],['tennis|racquet|racket|pickleball','🎾'],['golf','⛳'],
+  ['gym|weights|dumbbells?|yoga|kettlebell','🏋️'],['tent|camping|hiking|sleeping bag','🏕️'],['fishing|rod|reel','🎣'],['surf|wetsuit|swim|goggles','🏄'],
+  ['tickets?|concert|theatre|theater|show|class|lesson|course|workshop|experience|pottery','🎟️'],
+  ['garden|gardening|secateurs|plants?|seeds|pots?|watering','🪴'],['drill|hammer|screwdrivers?|tools?|toolbox|spanner','🛠️'],
+  ['matcha|tea|teapot','🍵'],['coffee|espresso|mug|grinder','☕'],['wine|champagne|prosecco','🍷'],['beer|cider','🍺'],['whisk(e)?y|gin|rum|vodka|spirits','🥃'],
+  ['chocolates?|lollies|candy|sweets|fudge','🍫'],['hot sauce|chilli|chili|sauce','🌶️'],['bbq|barbecue|grill|smoker','🔥'],
+  ['apron|knife|knives|pan|pans|wok|kitchen|cooking|baking|mixer|air fryer','🍳'],
+  ['candles?','🕯️'],['blanket|throw|pillow|bedding|sheets|doona|duvet','🛏️'],['glow|stars?','⭐'],['lamp|lights?|torch','💡'],
+  ['art|paints?|painting|sketch|pencils?|markers|canvas','🎨'],['dolls?','🪆'],['cars?|truck','🚗'],['cash|money','💵'],
+].map(([re,ic]) => [new RegExp('\\b(?:'+re+')\\b','i'), ic]);
+const iconFor = t => { for (const [re,ic] of ICONS) if (re.test(t||'')) return ic; return '🎁'; };
+
+
+function daysToXmas(){
+  const now = new Date(); const t = new Date(now.getFullYear(),0,1);
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  let x = new Date(now.getFullYear(),11,25);
+  if (today > x) x = new Date(now.getFullYear()+1,11,25);
+  return Math.round((x - today)/86400000);
+}
+
+/* ---------- data writes (demo = in memory, live = shared db) ---------- */
+function toast(msg){ const t=$('#toast'); t.textContent=msg; t.hidden=false; clearTimeout(toast.t); toast.t=setTimeout(()=>t.hidden=true,3200); }
+function fail(e){
+  console.warn(e);
+  if (e && e.code === 'permission-denied'){ toast('That didn’t save. Check the family code, or that Anonymous sign-in is switched on in Firebase.'); return; }
+  if (e && e.code === 'invalid_argument'){ S.readOnly = true; toast('You can look but not change things yet. Ask whoever shared this to invite you as an Editor.'); render(); }
+  else if (e && e.code === 'quota_exceeded') toast('The list is full. Delete a few old wishes and try again.');
+  else toast('That didn’t save. Check your connection and try again.');
+}
+async function put(coll, id, data){
+  if (S.mode === 'demo'){ if (coll==='meta') S.demo.settings = data; else S.demo[coll][id] = data; render(); return true; }
+  try { await db.doc(coll+'/'+id).set(data); return true; } catch(e){ fail(e); return false; }
+}
+async function del(coll, id){
+  if (S.mode === 'demo'){ delete S.demo[coll][id]; render(); return true; }
+  try { await db.doc(coll+'/'+id).delete(); return true; } catch(e){ fail(e); return false; }
+}
+function priv(){ if (S.mode==='demo') return S.demoPriv[S.viewAs] || (S.demoPriv[S.viewAs] = {budgets:{},notes:{}}); return S.live.priv; }
+async function savePriv(p){
+  if (S.mode === 'demo'){ S.demoPriv[S.viewAs] = p; render(); return; }
+  S.live.priv = p;
+  try { await db.doc('private/'+S.myPid).set(p); } catch(e){ fail(e); }
+}
+
+/* ---------- derived ---------- */
+const wishesFor = pid => Object.entries(D().wishes).filter(([,w]) => w.personId === pid).map(([id,w]) => ({id,...w}));
+const byPrio = (a,b) => (b.priority||1)-(a.priority||1) || (a.createdAt||0)-(b.createdAt||0);
+const claimOf = wid => D().claims[wid];
+function myGifts(){
+  const me = meId();
+  return Object.entries(D().claims).filter(([,c]) => c.byPid === me || (c.splitPids||[]).includes(me))
+    .map(([wid,c]) => ({wid, c, w: D().wishes[wid]})).filter(g => g.w);
+}
+const shareOf = g => (Number(g.w.price)||0) / (1 + (g.c.splitPids||[]).length);
+const others = () => { const me = meId(); return Object.keys(D().people).filter(id => id !== me).sort((a,b)=>nameOf(a).localeCompare(nameOf(b))); };
+
+/* ---------- render ---------- */
+function render(){
+  document.documentElement.dataset.mode = S.mode;
+  renderHead(); renderTabs(); renderBanner();
+  const v = $('#view');
+  if (S.mode === 'loading'){ v.innerHTML = `<div class="empty"><h3>Opening the family list…</h3><p>${S.slow ? 'This is taking longer than usual. The list can’t be reached yet, so check your connection.' : 'Fetching everyone’s wishes.'}</p></div>`; return; }
+  if (S.mode === 'join'){ v.innerHTML = viewJoin(); return; }
+  if (S.mode === 'code'){ v.innerHTML = viewCode(); return; }
+  if (S.mode === 'newfam'){ v.innerHTML = viewNewFamily(); return; }
+  if (S.mode === 'setup'){ v.innerHTML = viewSetup(); return; }
+  const r = S.route;
+  if (r === 'family') v.innerHTML = viewFamily();
+  else if (r === 'shopping' || r === 'market') v.innerHTML = viewShopping(r);
+  else if (r.startsWith('p-') && P(r.slice(2))) v.innerHTML = r.slice(2) === meId() ? viewList() : viewPerson(r.slice(2));
+  else v.innerHTML = viewList();
+}
+
+function renderHead(){
+  const d = daysToXmas();
+  $('#head').innerHTML = `
+    <div class="brand">
+      <svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true"><path d="M22 3 L26.5 15.5 L40 16 L29.5 24.3 L33.2 37.5 L22 29.8 L10.8 37.5 L14.5 24.3 L4 16 L17.5 15.5 Z" fill="var(--gold)"/></svg>
+      <div><h1>Under the Tree</h1><p>Wishes, gifts and who’s getting what</p></div>
+    </div>
+    <div class="count" title="Days until 25 December">${d === 0 ? '<span>Merry Christmas</span>' : `<b>${d}</b><span>${d===1?'day':'days'} until Christmas</span>`}</div>`;
+}
+function renderTabs(){
+  const show = S.mode === 'demo' || S.mode === 'live';
+  const n = show ? myGifts().filter(g => g.c.status !== 'tree' && g.c.byPid === meId()).length : 0;
+  const r = S.route.startsWith('p-') ? 'family' : S.route === 'market' ? 'shopping' : S.route;
+  const tab = (k,l,ic,extra='') => `<a href="#${k}" ${r===k?'aria-current="page"':''}><span class="ic" aria-hidden="true">${ic}</span>${l}${extra}</a>`;
+  $('#tabs').innerHTML = show ? tab('list','My wishes','⭐') + tab('shopping','Shopping','🛍️', n ? `<span class="n">${n}</span>` : '') + tab('family','Family','🎄') : '';
+  $('#tabs').hidden = !show;
+}
+function renderBanner(){
+  const b = $('#banner');
+  if (S.mode === 'demo'){
+    const opts = Object.keys(S.demo.people).filter(id => S.demo.people[id].uid).map(id => `<option value="${id}" ${id===S.viewAs?'selected':''}>${esc(nameOf(id))}</option>`).join('');
+    b.innerHTML = `<div class="banner"><div class="grow"><strong>Example family.</strong> Switch who you are to see how each person’s surprises stay hidden from them. Nothing here is saved.</div>
+      <label class="row" for="viewAs">Viewing as <select id="viewAs" data-change="viewas">${opts}</select></label>
+      ${S.liveAvailable ? '<button class="btn sm pine" data-act="real">Go to our real list</button>' : ''}</div>`;
+  } else if (S.mode === 'live' && S.readOnly){
+    b.innerHTML = `<div class="banner"><div class="grow"><strong>View only.</strong> You can browse, but changes won’t save until whoever shared this invites you as an Editor.</div></div>`;
+  } else b.innerHTML = '';
+}
+
+/* ---- gift tag ---- */
+function tagCard(w, ctx){
+  const pr = PRIOS[w.priority||1];
+  const url = safeUrl(w.url);
+  const c = ctx.showClaims ? claimOf(w.id) : null;
+  const top = `<div class="tag-top"><span class="chip ${pr.c}">${pr.l}</span>
+    ${w.secret ? `<span class="chip secret">Secret idea · ${esc(nameOf(w.addedBy))}</span>` : ''}
+    ${w.removed ? '<span class="chip warn">Taken off their list</span>' : ''}
+    ${c ? `<span class="chip taken">${c.byPid===meId() ? 'You’re getting this' : 'Taken by '+esc(nameOf(c.byPid))}${(c.splitPids||[]).length ? ' + '+c.splitPids.map(nameOf).map(esc).join(', ') : ''}</span>` : ''}</div>`;
+  const meta = `<div class="meta">${w.price ? `<span class="price">${money(w.price)}</span>` : '<span class="muted">No price given</span>'}
+    ${url ? `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(hostOf(url))} ↗</a>` : ''}</div>`;
+  return `<article class="tag ${pr.c}${(w.removed && ctx.mode==='owner') || (c && ctx.mode==='giver' && c.byPid!==meId() && !(c.splitPids||[]).includes(meId())) ? ' dim':''}">
+    <div class="tag-body"><div class="thumb" aria-hidden="true">${iconFor(w.title)}</div><div style="min-width:0">${top}<h3>${esc(w.title)}</h3>${w.note ? `<p class="note">${esc(w.note)}</p>` : ''}${meta}</div></div>
+    <div class="tag-side">${actionsFor(w, ctx, c)}</div></article>`;
+}
+function actionsFor(w, ctx, c){
+  if (S.readOnly) return '';
+  const me = meId();
+  if (ctx.mode === 'owner'){
+    if (w.removed) return `<button class="btn sm" data-act="restore" data-id="${w.id}">Put back on list</button><button class="btn sm ghost" data-act="delwish" data-id="${w.id}">Delete</button>`;
+    return `<button class="btn sm" data-act="editwish" data-id="${w.id}">Edit</button><button class="btn sm ghost" data-act="remove" data-id="${w.id}" title="Hides it from the list; anyone already buying it gets a heads-up">Got it already</button>`;
+  }
+  // giver
+  let out = '';
+  if (!c) out = w.removed ? '' : `<button class="btn sm primary" data-act="claim" data-id="${w.id}">I’ll get this</button>`;
+  else if (c.byPid === me){
+    out = `<div class="steps" role="group" aria-label="Gift status">${STATUSES.map((s,i)=>{ const at = STATUSES.findIndex(x=>x.k===c.status); return `<button data-act="status" data-id="${w.id}" data-s="${s.k}" class="${i===at?'on':i<at?'done':''}" aria-pressed="${i===at}">${s.l}</button>`; }).join('')}</div>
+      <button class="btn sm ghost" data-act="unclaim" data-id="${w.id}">${(c.splitPids||[]).length ? 'Hand over' : 'Let go'}</button>`;
+  } else if ((c.splitPids||[]).includes(me)) out = `<span class="muted" style="font-size:.82rem">Chipping in · ${money(shareOf({w,c}))} each</span><button class="btn sm ghost" data-act="leavesplit" data-id="${w.id}">Stop chipping in</button>`;
+  else out = `<button class="btn sm" data-act="chipin" data-id="${w.id}" title="Split the cost with ${esc(nameOf(c.byPid))}">Chip in</button>`;
+  if (w.secret && w.addedBy === me) out += `<button class="btn sm ghost" data-act="editwish" data-id="${w.id}">Edit idea</button>`;
+  return out;
+}
+
+/* ---- My list ---- */
+function viewList(){
+  const me = meId();
+  const managed = Object.keys(D().people).filter(id => D().people[id].managedBy === me);
+  const target = (S.managing && managed.includes(S.managing)) ? S.managing : me;
+  const isMe = target === me;
+  const all = wishesFor(target).filter(w => !w.secret);
+  const live = all.filter(w => !w.removed).sort(byPrio);
+  const gone = all.filter(w => w.removed);
+  const total = live.reduce((s,w)=>s+(Number(w.price)||0),0);
+  const sw = managed.length ? `<div class="filters" role="group" aria-label="Whose list"><button class="fchip" data-act="manage" data-id="${me}" aria-pressed="${isMe}">My wishes</button>${managed.map(id=>`<button class="fchip" data-act="manage" data-id="${id}" aria-pressed="${id===target}">${esc(possessive(nameOf(id)))} wishes</button>`).join('')}</div>` : '';
+  const preview = live.slice(0,3);
+  return `${sw}
+  <section class="wishcard">
+    <div class="stamp" aria-hidden="true"><small>To:</small>Santa</div>
+    <div class="wc-head"><span class="starbadge">${STAR}<b>${live.length}</b></span><h2>${isMe ? 'My Wishes' : esc(possessive(nameOf(target)))+' Wishes'}</h2></div>
+    <p class="wc-sub">${live.length ? 'About '+money(total)+' all up. ' : ''}${isMe ? 'The family can see these. You’ll never see who’s buying what.' : 'You look after this list for '+esc(nameOf(target))+'.'}</p>
+    ${preview.length ? `<ul class="wc-list">${preview.map(w=>`<li><span>${esc(w.title)}</span> ${iconFor(w.title)}</li>`).join('')}${live.length>3 ? `<li class="more">and ${live.length-3} more…</li>` : ''}</ul>` : ''}
+    ${S.readOnly ? '' : `<button class="btn primary" data-act="addwish" data-pid="${target}" style="margin-top:16px"><span aria-hidden="true" style="font-size:1.25em;line-height:1">+</span> Add a wish</button>`}
+  </section>
+  <div style="margin-top:16px">${profilePanel(target, true)}</div>
+  <p class="eyebrow">All wishes, most wanted first</p>
+  ${live.length ? `<div class="stack">${live.map(w=>tagCard(w,{mode:'owner',showClaims:false})).join('')}</div>`
+    : `<div class="empty"><h3>Nothing on the list yet</h3><p>Tap <b>Add a wish</b> above to start ${isMe?'your':esc(possessive(nameOf(target)))} list.</p></div>`}
+  ${gone.length ? `<p class="eyebrow">Got it already · hidden from the family</p><div class="stack">${gone.map(w=>tagCard(w,{mode:'owner'})).join('')}</div>` : ''}
+  <div class="tip"><span>Bought something yourself? Tap <b>Got it already</b> instead of deleting it. If someone was already buying it, they get a heads-up.</span></div>`;
+}
+function profilePanel(pid, editable){
+  const p = P(pid) || {}; const z = p.sizes || {};
+  const f = (l,v,wide) => `<div class="${wide?'wide':''}"><dt>${l}</dt><dd>${v ? esc(v) : '<span class="muted">Not set</span>'}</dd></div>`;
+  return `<section class="panel"><div class="panel-head"><div class="row">${av(pid)}<h3>${editable ? 'Sizes' : esc(nameOf(pid))}</h3></div>
+    ${editable && !S.readOnly ? `<button class="btn sm" data-act="editprofile" data-id="${pid}">Edit</button>` : ''}</div>
+    <dl class="facts">${f('Shirt',z.top)}${f('Pants',pantsText(z))}${f('Shoes',z.shoes)}
+    </dl></section>`;
+}
+
+/* ---- Family ---- */
+function viewFamily(){
+  const me = meId();
+  const ids = [me, ...others()].filter(Boolean);
+  const cards = ids.map(id => {
+    const p = P(id); const ws = wishesFor(id).filter(w=>!w.removed);
+    if (id === me) return `<a class="person" href="#list">${av(id,true)}<h3>${esc(p.name)}</h3><div class="small">That’s you!</div><div class="sub2">${(n => n+' '+(n===1?'wish':'wishes'))(ws.filter(w=>!w.secret).length)} on your list</div></a>`;
+    const taken = ws.filter(w => claimOf(w.id)).length;
+    const mine = ws.filter(w => { const c = claimOf(w.id); return c && (c.byPid===me || (c.splitPids||[]).includes(me)); });
+    const wrapped = mine.filter(w => ['wrapped','tree'].includes(claimOf(w.id).status)).length;
+    return `<a class="person" href="#p-${id}">${mine.length ? '<span class="bow" aria-hidden="true">🎀</span>' : ''}${av(id,true)}<h3>${esc(p.name)}</h3>
+      <div class="small">${mine.length ? wrapped+'/'+mine.length+' wrapped' : 'No gifts yet'}</div>
+      <div class="sub2">${taken} of ${ws.length} taken${p.managedBy ? ' · kept by '+esc(nameOf(p.managedBy)) : ''}</div></a>`;
+  }).join('');
+  const add = S.readOnly ? '' : `<button class="person" data-act="addperson"><span class="av lg plus" aria-hidden="true">+</span><h3>Add</h3><div class="sub2">Someone not on the app</div></button>`;
+  return `<h2 class="ribbon"><span aria-hidden="true">🎁</span> Who are you shopping for?</h2>
+  <div class="grid">${cards}${add}</div>
+  ${S.mode === 'live' ? `<div class="tip" style="margin-top:28px;align-items:center;flex-wrap:wrap"><span style="flex:1 1 220px">On this device you’re <b>${esc(nameOf(me))}</b>.</span><button class="btn sm" data-act="leavefam">Leave this family</button></div>` : ''}
+  <div class="tip" style="margin-top:12px"><span>A bow means you’re giving them something. Tap anyone to see their wishes and claim a gift; they’ll never see it.</span></div>`;
+}
+/* ---- One person's list ---- */
+function viewPerson(pid){
+  const me = meId(); const p = P(pid);
+  let ws = wishesFor(pid).filter(w => !w.removed && !claimOf(w.id));
+  const allW = wishesFor(pid).filter(w => !w.removed && !w.secret); const total = allW.length, taken = allW.filter(w => claimOf(w.id)).length;
+  if (S.filter === 'open') ws = ws.filter(w => !claimOf(w.id));
+  if (S.filter === 'mine') ws = ws.filter(w => { const c=claimOf(w.id); return c && (c.byPid===me || (c.splitPids||[]).includes(me)); });
+  if (S.filter === 'under') ws = ws.filter(w => Number(w.price) && Number(w.price) <= 50);
+  ws.sort(S.sort === 'cheap' ? (a,b)=>(Number(a.price)||1e9)-(Number(b.price)||1e9) : S.sort === 'dear' ? (a,b)=>(Number(b.price)||0)-(Number(a.price)||0) : byPrio);
+  const wish = ws.filter(w=>!w.secret), ideas = ws.filter(w=>w.secret);
+  const fc = (k,l) => `<button class="fchip" data-act="filter" data-f="${k}" aria-pressed="${S.filter===k}">${l}</button>`;
+  const ctx = {mode:'giver', showClaims:true};
+  return `<a class="back" href="#family">← Family</a>
+  <div class="view-head"><div class="row" style="gap:12px">${av(pid,true)}<div><h2>${esc(possessive(p.name))} list</h2><p>${total-taken} still available · ${taken} already claimed${p.managedBy ? ' · list kept by '+esc(nameOf(p.managedBy)) : ''}</p></div></div>
+  ${S.readOnly ? '' : `<button class="btn" data-act="addwish" data-pid="${pid}" data-secret="1">+ Secret idea</button>`}</div>
+  ${profilePanel(pid, false)}
+  <div class="filters" role="group" aria-label="Filter">${fc('all','All')}${fc('under','Under '+money(50))}
+    <select id="sort" data-change="sort" aria-label="Sort"><option value="priority" ${S.sort==='priority'?'selected':''}>Most wanted</option><option value="cheap" ${S.sort==='cheap'?'selected':''}>Price: low to high</option><option value="dear" ${S.sort==='dear'?'selected':''}>Price: high to low</option></select></div>
+  ${wish.length ? `<div class="stack">${wish.map(w=>tagCard(w,ctx)).join('')}</div>` : `<div class="empty"><h3>${total && taken===total ? 'Everything on '+esc(possessive(p.name))+' list has been claimed' : total ? 'Nothing matches that filter' : esc(p.name)+' hasn’t added anything yet'}</h3><p>${total && taken===total ? 'Add a secret idea below, or check your Shopping page.' : total ? 'Try another filter.' : 'Check their sizes and favourites above, or add a secret idea.'}</p></div>`}
+  <p class="eyebrow">Secret ideas · ${esc(p.name)} can’t see these</p>
+  ${ideas.length ? `<div class="stack">${ideas.map(w=>tagCard(w,ctx)).join('')}</div>` : `<p class="muted" style="margin:0">Spotted something ${esc(p.name)} would love that isn’t on their list? Add it as a secret idea so the rest of the family can see it too.</p>`}`;
+}
+
+/* ---- My shopping ---- */
+function viewShopping(r){
+  const me = meId();
+  const open = others().reduce((n,id) => n + wishesFor(id).filter(w => !w.removed && !claimOf(w.id)).length, 0);
+  const mine = myGifts().length;
+  const tabs = `<nav class="subtabs" aria-label="Shopping">
+    <a href="#market" ${r==='market'?'aria-current="page"':''}>🎪 Open market <small>${open}</small></a>
+    <a href="#shopping" ${r!=='market'?'aria-current="page"':''}>🎁 My gifts <small>${mine}</small></a></nav>`;
+  return tabs + (r === 'market' ? viewMarket() : viewMyGifts());
+}
+function viewMarket(){
+  const groups = others().map(id => ({id, ws: wishesFor(id).filter(w => !w.removed && !claimOf(w.id)).sort(byPrio)}));
+  const total = groups.reduce((n,g)=>n+g.ws.length,0);
+  const chev = '<svg class="chev" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  return `<div class="view-head"><div><h2>Open market</h2><p>Tap a name to see the presents nobody has claimed yet.</p></div></div>
+  ${total ? '' : '<div class="empty"><h3>Everything’s been claimed</h3><p>Nice work, family. Add a secret idea from someone’s list if you spot something else.</p></div>'}
+  <div class="mlist">${groups.map(g => { const open = S.mktOpen === g.id; return `<div class="mitem${open?' open':''}">
+    <button class="mrow" data-act="mkt" data-id="${g.id}" aria-expanded="${open}" aria-controls="mk-${g.id}">${av(g.id)}<span class="mname">${esc(nameOf(g.id))}</span>
+      <span class="mnum${g.ws.length?'':' zero'}">${g.ws.length} ${g.ws.length===1?'present':'presents'}</span>${chev}</button>
+    ${open ? `<div class="mdrawer" id="mk-${g.id}">${g.ws.length ? `<div class="stack">${g.ws.map(w => tagCard(w,{mode:'giver',showClaims:true})).join('')}</div>` : `<p class="mempty">All of ${esc(possessive(nameOf(g.id)))} presents are claimed.</p>`}
+      <a class="mlink" href="#p-${g.id}">See ${esc(possessive(nameOf(g.id)))} sizes and secret ideas →</a></div>` : ''}
+  </div>`; }).join('')}</div>`;
+}
+function viewMyGifts(){
+  const me = meId(); const pv = priv(); const gifts = myGifts();
+  const spent = gifts.reduce((s,g)=>s+shareOf(g),0);
+  const budgetTotal = Object.entries(pv.budgets||{}).filter(([id])=>P(id)).reduce((s,[,v])=>s+(Number(v)||0),0);
+  const done = gifts.filter(g => g.c.status==='wrapped' || g.c.status==='tree').length;
+  const toBuy = gifts.filter(g => g.c.status==='claimed').length;
+  const removedWarn = gifts.filter(g => g.w.removed);
+  const recips = others();
+  const groups = recips.map(id => {
+    const gs = gifts.filter(g => g.w.personId === id);
+    const sp = gs.reduce((s,g)=>s+shareOf(g),0); const bud = Number((pv.budgets||{})[id])||0;
+    const pct = bud ? Math.min(100, Math.round(sp/bud*100)) : 0;
+    return {id, gs, sp, bud, pct};
+  });
+  const need = groups.filter(g => !g.gs.length);
+  const has = groups.filter(g => g.gs.length);
+  return `<div class="view-head"><div><h2>My gifts</h2><p>The gifts you’ve chosen to buy, by person. Budgets and notes here are private to you.</p></div></div>
+  <div class="sum">
+    <div><b>${gifts.length}</b><span>gifts you’re giving</span></div>
+    <div><b>${toBuy}</b><span>still to buy</span></div>
+    <div><b>${done}</b><span>wrapped or under the tree</span></div>
+    <div><b class="price" style="font-family:var(--f-display)">${money(Math.round(spent))}</b><span>${budgetTotal ? 'of '+money(budgetTotal)+' budget' : 'spent so far (your share)'}</span></div>
+  </div>
+  ${removedWarn.length ? `<div class="banner" style="background:var(--berry-soft);border-color:var(--berry)"><div class="grow"><strong>Heads-up:</strong> ${removedWarn.map(g=>esc(nameOf(g.w.personId))+' took “'+esc(g.w.title)+'” off their list').join('; ')}. They may already have it, so check before you buy.</div></div>` : ''}
+  ${need.length ? `<p class="eyebrow">No gift yet for</p><div class="needs">${need.map(g=>`<a class="btn sm" href="#p-${g.id}">${av(g.id)} ${esc(g.id && nameOf(g.id))}</a>`).join('')}</div>` : (recips.length ? '<p class="eyebrow">Everyone’s covered</p>' : '')}
+  ${has.map(g => `<section class="panel" style="margin-top:14px"><div class="panel-head"><div class="row">${av(g.id)}<h3>For ${esc(nameOf(g.id))}</h3></div>
+    <label class="budget" for="bud-${g.id}">Budget ${cur()}<input id="bud-${g.id}" type="number" min="0" step="1" inputmode="numeric" value="${g.bud||''}" placeholder="—" data-change="budget" data-id="${g.id}"></label></div>
+    ${g.bud ? `<div class="bar${g.sp>g.bud?' over':''}" style="margin-bottom:6px"><i style="width:${g.pct}%"></i></div><div class="s muted" style="font-size:.8rem;margin-bottom:6px">${money(Math.round(g.sp))} of ${money(g.bud)}${g.sp>g.bud ? ' · over by '+money(Math.round(g.sp-g.bud)) : ' · '+money(Math.round(g.bud-g.sp))+' left'}</div>` : ''}
+    ${g.gs.map(x => { const lead = x.c.byPid === me; const at = STATUSES.findIndex(s=>s.k===x.c.status);
+      return `<div class="gline"><div style="min-width:0"><div class="t">${esc(x.w.title)}${x.w.secret?' <span class="chip secret">Secret idea</span>':''}</div>
+        <div class="s"><span class="price">${x.w.price ? money(shareOf(x)) : 'No price'}</span>${(x.c.splitPids||[]).length ? ' · your share, split with '+[x.c.byPid,...x.c.splitPids].filter(i=>i!==me).map(nameOf).map(esc).join(', ') : ''}${safeUrl(x.w.url) ? ` · <a href="${esc(x.w.url)}" target="_blank" rel="noopener">${esc(hostOf(x.w.url))} ↗</a>` : ''}</div>
+        <label for="note-${x.wid}" class="muted" style="font-size:0;position:absolute">Private note</label><input id="note-${x.wid}" data-change="note" data-id="${x.wid}" placeholder="Private note: where it’s hidden, order number…" value="${esc((pv.notes||{})[x.wid]||'')}"></div>
+        <div>${lead && !S.readOnly ? `<div class="steps" role="group" aria-label="Gift status">${STATUSES.map((s,i)=>`<button data-act="status" data-id="${x.wid}" data-s="${s.k}" class="${i===at?'on':i<at?'done':''}" aria-pressed="${i===at}">${s.l}</button>`).join('')}</div><div style="text-align:right;margin-top:6px"><button class="btn sm ghost" data-act="unclaim" data-id="${x.wid}">Unclaim</button></div>` : `<span class="chip taken">${esc(STATUSES[at]?.l||'Claimed')} · ${esc(nameOf(x.c.byPid))} is sorting it</span>${S.readOnly ? '' : `<div style="text-align:right;margin-top:6px"><button class="btn sm ghost" data-act="leavesplit" data-id="${x.wid}">Stop chipping in</button></div>`}`}</div></div>`; }).join('')}
+  </section>`).join('')}
+  ${!gifts.length ? `<div class="empty" style="margin-top:14px"><h3>You haven’t claimed anything yet</h3><p>Open someone’s list on the Family tab and tap “I’ll get this”.</p><a class="btn pine" href="#family">Browse the family</a></div>` : ''}`;
+}
+
+/* ---- Join (live, first visit) ---- */
+function viewJoin(){
+  const open = Object.entries(S.live.people).filter(([,p]) => !p.managedBy).sort((a,b)=>a[1].name.localeCompare(b[1].name));
+  return `<div class="join panel"><h2 style="font-family:var(--f-display);font-weight:800;margin:0 0 4px">Welcome to the family list</h2>
+  <p class="muted" style="margin:0">Join once and you can add your own wishes and quietly claim gifts for everyone else.</p>
+  ${open.length ? `<p class="eyebrow" style="color:var(--ink)">Already in the family? Pick your name</p><div class="pick">${open.map(([id,p])=>`<button class="btn" data-act="joinas" data-id="${id}">${av(id)} I’m ${esc(p.name)}</button>`).join('')}</div>` : ''}
+  <p class="eyebrow" style="color:var(--ink)">${open.length ? 'Or join as someone new' : 'What should the family call you?'}</p>
+  <form data-form="join" class="row" style="align-items:stretch"><label for="joinName" style="position:absolute;font-size:0">Your name</label><input id="joinName" name="name" required maxlength="40" placeholder="e.g. Mum, Uncle Rob, Sophie" style="flex:1 1 200px;border:1px solid var(--line);border-radius:10px;padding:9px 11px;background:var(--bg)"><button class="btn primary">Join</button></form>
+  <div class="tip"><span>Want a look around first? <button class="btn sm" data-act="demo">Explore an example family</button></span></div></div>`;
+}
+
+/* ---------- sheets ---------- */
+function openSheet(html){ $('#sheet').innerHTML = html; $('#overlay').hidden = false; initWheels($('#sheet')); const f = $('#w-title, #ps-name, #copybox'); f && f.focus(); }
+
+/* ---------- size wheels ---------- */
+const SZ_TOPS = ['XS','S','M','L','XL','XXL','3XL','4XL'];
+const SZ_SHOES = [...Array.from({length:19},(_,i)=>'Women '+(4+i/2)), ...Array.from({length:25},(_,i)=>'Men '+(4+i/2))];
+const SZ_WAIST = Array.from({length:27},(_,i)=>String(24+i));   // 24–50 in
+const SZ_LENGTH = Array.from({length:13},(_,i)=>String(26+i));  // 26–38 in
+const WHEEL_H = 26;
+function pantsText(z){ const fit = z.waist && z.length ? `${z.waist}W × ${z.length}L` : z.waist ? z.waist+'" waist' : z.length ? z.length+'" leg' : ''; return [z.bottom, fit].filter(Boolean).join(' · '); }
+function wheel(name, label, opts, val){
+  const all = [['','—'], ...opts.map(o => [o,o])];
+  const at = Math.max(0, all.findIndex(o => o[0] === (val||'')));
+  return `<div class="wheel-field"><span class="wlabel" id="wl-${name}">${label}</span>
+    <div class="wheel" data-wheel="${name}" data-at="${at}" tabindex="0" role="listbox" aria-labelledby="wl-${name}">
+      <div class="wheel-track">${all.map((o,i)=>`<div class="wi" role="option" data-i="${i}" data-v="${esc(o[0])}">${esc(o[1])}</div>`).join('')}</div>
+    </div><input type="hidden" name="${name}" value="${esc(all[at][0])}"></div>`;
+}
+function initWheels(root){
+  root.querySelectorAll('.wheel').forEach(w => {
+    const items = [...w.querySelectorAll('.wi')]; const input = w.parentElement.querySelector('input[type=hidden]');
+    const mark = i => { i = Math.max(0, Math.min(items.length-1, i)); items.forEach((el,k)=>{ el.classList.toggle('sel', k===i); el.setAttribute('aria-selected', k===i); }); input.value = items[i].dataset.v; w.dataset.at = i; };
+    const go = (i, smooth) => { i = Math.max(0, Math.min(items.length-1, i)); w.scrollTo({top:i*WHEEL_H, behavior: smooth ? 'smooth' : 'auto'}); mark(i); };
+    const start = Number(w.dataset.at)||0; let ready = false;
+    mark(start);
+    requestAnimationFrame(() => { go(start, false); requestAnimationFrame(() => { go(start, false); ready = true; }); });
+    let t; w.addEventListener('scroll', () => { if (!ready) return; mark(Math.round(w.scrollTop / WHEEL_H)); clearTimeout(t); t = setTimeout(() => go(Math.round(w.scrollTop / WHEEL_H), true), 120); }, {passive:true});
+    w.addEventListener('click', e => { const it = e.target.closest('.wi'); if (it) go(Number(it.dataset.i), true); });
+    w.addEventListener('keydown', e => { if (e.key==='ArrowDown'){ e.preventDefault(); go(Number(w.dataset.at)+1, true); } if (e.key==='ArrowUp'){ e.preventDefault(); go(Number(w.dataset.at)-1, true); } });
+  });
+}
+function closeSheet(){ $('#overlay').hidden = true; $('#sheet').innerHTML = ''; }
+const X_ICON = '<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
+function sheetHead(title, lead){ return `<div class="sheet-head"><div><h3>${title}</h3>${lead ? `<p>${lead}</p>` : ''}</div><button type="button" class="xbtn" data-act="close" aria-label="Close">${X_ICON}</button></div>`; }
+function wishSheet(wid, pid, secret, pre){
+  const w = wid ? D().wishes[wid] : {priority:2, title: pre || ''}; pid = wid ? w.personId : pid; secret = wid ? !!w.secret : secret;
+  const dots = {3:'var(--berry)',2:'var(--gold)',1:'var(--muted)'};
+  const pr = k => `<label><input type="radio" name="priority" value="${k}" ${Number(w.priority||2)===k?'checked':''}><i style="background:${dots[k]}"></i>${PRIOS[k].l}</label>`;
+  const title = wid ? (secret ? 'Edit secret idea' : 'Edit wish') : secret ? 'Secret idea for '+esc(nameOf(pid)) : pid===meId() ? 'Add a wish' : 'Add a wish for '+esc(nameOf(pid));
+  const lead = secret ? esc(nameOf(pid))+' won’t see this. Everyone else can claim it.' : 'Fill in everything except details so people can find exactly the right thing.';
+  const canDel = wid && (secret ? w.addedBy===meId() : true);
+  openSheet(`<form data-form="wish" data-id="${wid||''}" data-pid="${pid}" data-secret="${secret?1:''}">
+    ${sheetHead(title, lead)}
+    <div class="sheet-body">
+      <div class="field"><label for="w-title">What would you like?</label><input id="w-title" class="title-input" name="title" required maxlength="120" value="${esc(w.title||'')}" placeholder="e.g. Merino hiking socks" autocomplete="off"></div>
+      <fieldset class="field"><legend>How much do you want it?</legend><div class="seg">${pr(3)}${pr(2)}${pr(1)}</div></fieldset>
+      <div class="two">
+        <div class="field"><label for="w-price">Rough price</label><div class="money-in" style="--cw:${cur().length}ch"><span>${esc(cur())}</span><input id="w-price" name="price" type="text" inputmode="decimal" autocomplete="off" required value="${esc(w.price||'')}" placeholder="0"></div></div>
+        <div class="field"><label for="w-url">Link</label><input id="w-url" name="url" type="text" inputmode="url" autocomplete="off" required value="${esc(w.url||'')}" placeholder="Paste a shop link"></div>
+      </div>
+      <div class="field"><label for="w-note">Details <span class="opt">Optional</span></label><textarea id="w-note" name="note" maxlength="400" rows="3" placeholder="Size, colour, model, where to buy it">${esc(w.note||'')}</textarea></div>
+    </div>
+    <div class="sheet-foot">${canDel ? `<button type="button" class="btn ghost" data-act="delwish" data-id="${wid}">Delete</button>` : ''}<span class="sp"></span><button type="button" class="btn" data-act="close">Cancel</button><button class="btn primary">${wid ? 'Save changes' : 'Add to list'}</button></div>
+  </form>`);
+}
+function profileSheet(pid){
+  const p = P(pid) || {}; const z = p.sizes || {};
+  const inp = (n,l,v,ph) => `<div class="field"><label for="pf-${n}">${l}</label><input id="pf-${n}" name="${n}" maxlength="60" value="${esc(v||'')}" placeholder="${ph}"></div>`;
+  openSheet(`<form data-form="profile" data-id="${pid}">
+    ${sheetHead(pid===meId() ? 'Your character &amp; sizes' : esc(possessive(nameOf(pid)))+' character &amp; sizes', 'Helps everyone pick clothes and surprises that fit.')}
+    <div class="sheet-body">
+      ${charPicker(charOf(pid), pid===meId() ? 'Pick your character' : 'Pick their character')}<p class="wsec">Sizes <span>Scroll to choose. Leave on — if you’re not sure.</span></p>
+      <div class="wheels">${wheel('top','Shirt',SZ_TOPS,z.top)}${wheel('bottom','Pants',SZ_TOPS,z.bottom)}${wheel('shoes','Shoes (US)',SZ_SHOES,z.shoes)}</div>
+      <p class="wsec">Pants waist &amp; length <span>Optional, in inches</span></p>
+      <div class="wheels two-w">${wheel('waist','Waist',SZ_WAIST,z.waist)}${wheel('length','Length',SZ_LENGTH,z.length)}</div>
+      
+      
+    </div>
+    <div class="sheet-foot"><span class="sp"></span><button type="button" class="btn" data-act="close">Cancel</button><button class="btn primary">Save</button></div></form>`);
+}
+function personSheet(){
+  const me = meId();
+  const keepers = Object.entries(D().people).filter(([,p]) => p.uid);
+  openSheet(`<form data-form="person">
+    ${sheetHead('Add someone not on the app', 'Little kids, grandparents, a new partner. Someone in the family keeps their list for them.')}
+    <div class="sheet-body">
+      <div class="field"><label for="ps-name">Their name</label><input id="ps-name" name="name" required maxlength="40" placeholder="e.g. Nana, Jack (8)"></div>
+      ${charPicker(PICKS.find(c => !Object.keys(D().people).some(id => charOf(id) === c)) || PICKS[0], 'Pick their character')}
+      <div class="field"><label for="ps-keep">Who keeps their list?</label><select id="ps-keep" name="keeper">${keepers.map(([id,p])=>`<option value="${id}" ${id===me?'selected':''}>${esc(p.name)}${id===me?' (you)':''}</option>`).join('')}<option value="">Nobody yet; they’ll join later</option></select></div>
+    </div>
+    <div class="sheet-foot"><span class="sp"></span><button type="button" class="btn" data-act="close">Cancel</button><button class="btn primary">Add person</button></div></form>`);
+}
+function copyText(pid){
+  const p = P(pid); const ws = wishesFor(pid).filter(w=>!w.secret && !w.removed).sort(byPrio);
+  const z = p.sizes||{};
+  const lines = [`${possessive(p.name)} Christmas list`, ''];
+  ws.forEach(w => { lines.push(`• ${w.title}${w.price ? ' (~'+money(w.price)+')' : ''} · ${PRIOS[w.priority||1].l}`); if (w.note) lines.push(`   ${w.note}`); if (safeUrl(w.url)) lines.push(`   ${w.url}`); });
+  const sz = [['Top',z.top],['Pants',z.bottom],['Shoes',z.shoes],['Other',z.other]].filter(x=>x[1]).map(x=>x[0]+': '+x[1]).join(' · ');
+  if (sz) lines.push('', 'Sizes: '+sz);
+  if (p.likes) lines.push('Loves: '+p.likes);
+  return lines.join('\n');
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click', async e => {
+  const t = e.target.closest('[data-act]'); if (!t) { if (e.target.id === 'overlay') closeSheet(); return; }
+  const a = t.dataset.act, id = t.dataset.id, me = meId();
+  const w = id && D().wishes[id];
+  switch (a){
+    case 'close': closeSheet(); break;
+    case 'addwish': wishSheet(null, t.dataset.pid, !!t.dataset.secret); break;
+    case 'editwish': wishSheet(id); break;
+    case 'editprofile': profileSheet(id); break;
+    case 'addperson': personSheet(); break;
+    case 'manage': S.managing = id; render(); break;
+    case 'mkt': S.mktOpen = S.mktOpen === id ? null : id; render(); break;
+    case 'filter': S.filter = t.dataset.f; render(); break;
+    case 'remove': await put('wishes', id, {...w, removed:true}); toast('Marked as got it. It’s hidden from the family now.'); break;
+    case 'restore': await put('wishes', id, {...w, removed:false}); break;
+    case 'delwish':
+      if (t.dataset.confirm !== '1'){ t.dataset.confirm = '1'; t.textContent = 'Tap again to delete'; setTimeout(()=>{ if (t.isConnected){ t.dataset.confirm=''; t.textContent='Delete'; } }, 3000); break; }
+      closeSheet(); await del('wishes', id); if (claimOf(id)) await del('claims', id); toast('Deleted.'); break;
+    case 'claim': {
+      if (S.mode === 'live'){ try { const s = await db.doc('claims/'+id).get(); if (s.exists){ toast('Someone just claimed this. Try chipping in instead.'); break; } } catch(err){} }
+      if (await put('claims', id, {byPid:me, status:'claimed', splitPids:[], updatedAt:Date.now()})) toast('Claimed! It’s moved to your Shopping page. '+nameOf(w.personId)+' won’t see it.');
+      break; }
+    case 'unclaim': {
+      const c = claimOf(id); const sp = c.splitPids||[];
+      if (sp.length){ await put('claims', id, {...c, byPid:sp[0], splitPids:sp.slice(1), updatedAt:Date.now()}); toast('Handed over to '+nameOf(sp[0])+'.'); }
+      else { await del('claims', id); toast('Released. Someone else can claim it now.'); }
+      break; }
+    case 'status': { const c = claimOf(id); await put('claims', id, {...c, status:t.dataset.s, updatedAt:Date.now()}); break; }
+    case 'chipin': { const c = claimOf(id); await put('claims', id, {...c, splitPids:[...(c.splitPids||[]).filter(x=>x!==me), me], updatedAt:Date.now()}); toast('You’re chipping in with '+nameOf(c.byPid)+'.'); break; }
+    case 'leavesplit': { const c = claimOf(id); await put('claims', id, {...c, splitPids:(c.splitPids||[]).filter(x=>x!==me), updatedAt:Date.now()}); break; }
+    case 'copy': {
+      const txt = copyText(t.dataset.pid);
+      try { await navigator.clipboard.writeText(txt); toast('List copied. Paste it into a text or email.'); }
+      catch { openSheet(sheetHead('Copy your list','Select all and copy, then paste it into a message.') + `<div class="sheet-body"><label for="copybox" style="position:absolute;font-size:0">List text</label><textarea id="copybox" class="copybox" readonly>${esc(txt)}</textarea></div><div class="sheet-foot"><span class="sp"></span><button class="btn primary" data-act="close">Done</button></div>`); const b=$('#copybox'); b.select(); }
+      break; }
+    case 'joinas': choosePerson(id); break;
+    case 'switchme': store('utt-person', null); S.myPid = null; S.mode = 'join'; location.hash = '#list'; render(); break;
+    case 'leavefam': store('utt-code', null); store('utt-person', null); location.hash = ''; location.reload(); break;
+    case 'newfam': await startFamily(); break;
+    case 'retrycode': S.mode = 'code'; S.pendingCode = null; render(); break;
+    case 'demo': startDemo(); break;
+    case 'real': S.mode = !S.code ? 'code' : meId() ? 'live' : 'join'; render(); break;
+  }
+});
+document.addEventListener('submit', async e => {
+  const f = e.target.closest('form[data-form]'); if (!f) return; e.preventDefault();
+  const v = Object.fromEntries(new FormData(f)); const me = meId();
+  if (f.dataset.form === 'quick'){ const tt = (v.title||'').trim(); wishSheet(null, f.dataset.pid, false, tt); if (tt) setTimeout(()=>{ const pz=$('#w-price'); pz && pz.focus(); },0); return; }
+  if (f.dataset.form === 'wish'){
+    const priceNum = parseFloat(String(v.price||'').replace(/[^0-9.]/g,''));
+    if (!(isFinite(priceNum) && priceNum > 0)){ toast('Enter a price, like 45 or 19.99.'); $('#w-price').focus(); return; }
+    let link = String(v.url||'').trim().replace(/\s+/g,'');
+    if (link && !/^https?:\/\//i.test(link)) link = 'https://' + link;
+    if (!/^https?:\/\/[^\/\s]+\.[^\/\s]+/i.test(link)){ toast('Paste a shop link, like amazon.com/…'); $('#w-url').focus(); return; }
+    v.url = link;
+    const id = f.dataset.id || newId(); const old = f.dataset.id ? D().wishes[id] : null;
+    const data = {...(old||{}), personId:f.dataset.pid, title:v.title.trim(), price: (() => { const n = parseFloat(String(v.price||'').replace(/[^0-9.]/g,'')); return isFinite(n) && n > 0 ? n : null; })(), url:(v.url||'').trim(), priority:Number(v.priority)||2, note:(v.note||'').trim(),
+      secret: !!f.dataset.secret, addedBy: old ? old.addedBy : me, removed: old ? !!old.removed : false, createdAt: old ? old.createdAt : Date.now()};
+    closeSheet(); if (await put('wishes', id, data)) toast(old ? 'Saved.' : data.secret ? 'Secret idea added. '+nameOf(data.personId)+' can’t see it.' : 'Sent to Santa! The family can see it now.');
+  } else if (f.dataset.form === 'profile'){
+    const id = f.dataset.id; const p = P(id);
+    closeSheet(); await put('people', id, {...p, sizes:{top:v.top||'',bottom:v.bottom||'',waist:v.waist||'',length:v.length||'',shoes:v.shoes||''}, char: v.char || charOf(id)});
+  } else if (f.dataset.form === 'person'){
+    closeSheet(); await put('people', newId(), {name:v.name.trim(), uid:null, managedBy:v.keeper||null, char:v.char||null, sizes:{}, likes:'', createdAt:Date.now()}); toast(v.name.trim()+' added.');
+  } else if (f.dataset.form === 'join'){
+    const pid = newId();
+    if (await put('people', pid, {name:v.name.trim(), uid:null, managedBy:null, sizes:{}, createdAt:Date.now()})){ choosePerson(pid); location.hash='#list'; }
+  } else if (f.dataset.form === 'code'){
+    const code = String(v.code||'').trim().toLowerCase().replace(/\s+/g,'-');
+    if (code.length < 8 || !/^[a-z0-9._~-]+$/.test(code)){ toast('Family codes are at least 8 letters or numbers, like snowy-reindeer-42.'); return; }
+    await openFamily(code, false);
+  }
+});
+document.addEventListener('change', async e => {
+  const t = e.target.closest('[data-change]'); if (!t) return;
+  const k = t.dataset.change;
+  if (k === 'viewas'){ S.viewAs = t.value; S.managing = null; if (S.route.startsWith('p-') && S.route.slice(2) === t.value) location.hash = '#list'; render(); }
+  else if (k === 'sort'){ S.sort = t.value; render(); }
+  else if (k === 'currency'){ await put('meta','settings',{...D().settings, currency:t.value}); }
+  else if (k === 'budget'){ const p = structuredClone(priv()); p.budgets = p.budgets||{}; p.budgets[t.dataset.id] = t.value ? Number(t.value) : null; await savePriv(p); }
+  else if (k === 'note'){ const p = structuredClone(priv()); p.notes = p.notes||{}; p.notes[t.dataset.id] = t.value.trim(); await savePriv(p); }
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#overlay').hidden) closeSheet(); });
+function route(){ const h = (location.hash||'').slice(1); S.route = h || 'list'; S.filter = 'all'; render(); window.scrollTo(0,0); }
+window.addEventListener('hashchange', route);
+
+/* ---------- example family (clearly marked, in memory only) ---------- */
+function startDemo(){
+  const t = Date.now(); const P_ = (name, extra) => ({name, uid:'example', managedBy:null, sizes:{}, likes:'', avoid:'', createdAt:t, ...extra});
+  const d = blank(); d.settings = {currency: S.live.settings.currency || '$'};
+  d.people = {
+    mum: P_('Mum', {sizes:{top:'M',bottom:'M',shoes:'Women 8'}, likes:'Gardening, crime novels, good loose-leaf tea, anything sage green', avoid:'Candles (has dozens), chocolate'}),
+    dad: P_('Dad', {sizes:{top:'XL',bottom:'XL',waist:'36',length:'32',shoes:'Men 11'}, likes:'Cycling, the BBQ, history podcasts, hot sauce', avoid:'Socks. Please.'}),
+    sophie: P_('Sophie', {sizes:{top:'S',bottom:'S',shoes:'Women 7'}, likes:'Film photography, matcha, vinyl, Studio Ghibli', avoid:'Anything pink'}),
+    jack: P_('Jack (8)', {uid:null, managedBy:'mum', sizes:{top:'XS',bottom:'XS'}, likes:'Lego, dinosaurs, soccer, glow-in-the-dark anything', avoid:'Small-piece slime kits'}),
+    nana: P_('Nana', {uid:null, managedBy:'dad', sizes:{top:'L'}, likes:'Jigsaws, birdwatching, family photos', avoid:'Gadgets with tiny buttons'}),
+  };
+  const W = (id, personId, title, price, priority, extra={}) => d.wishes[id] = {personId, title, price, priority, note:'', url:'', secret:false, addedBy:personId, removed:false, createdAt:t, ...extra};
+  W('w1','mum','Secateurs, the good Japanese ones',65,3,{note:'Right-handed. Red handles if possible.',url:'https://example.com/secateurs'});
+  W('w2','mum','Latest Jane Harper novel',33,2);
+  W('w3','mum','Linen apron',48,1,{note:'Sage green or natural, size M/L'});
+  W('w4','dad','Bike light set, USB rechargeable',89,3,{url:'https://example.com/bike-lights'});
+  W('w5','dad','Hot sauce sampler',40,2,{note:'The hotter the better'});
+  W('w6','dad','Leather cycling gloves',55,1,{note:'Size L', removed:true});
+  W('w7','sophie','35mm film, Portra 400 (5 rolls)',95,3,{note:'Colour, not black & white'});
+  W('w8','sophie','Ceramic matcha bowl and whisk',60,2,{url:'https://example.com/matcha-set'});
+  W('w9','sophie','Spirited Away vinyl soundtrack',52,2);
+  W('w10','jack','Lego T. rex set',120,3,{note:'The big one with moving jaw',url:'https://example.com/lego-trex'});
+  W('w11','jack','Soccer shin pads',25,2,{note:'Kids size S'});
+  W('w12','jack','Glow-in-the-dark star ceiling kit',18,1);
+  W('w13','nana','1000-piece jigsaw, birds of the garden',35,2);
+  W('w14','nana','Photo book of the year',70,3,{note:'Sophie has the photos'});
+  W('s1','mum','Weekend pottery class with Sophie',150,2,{secret:true, addedBy:'sophie', note:'She mentioned it at Easter'});
+  W('s2','dad','Tickets to the cycling at the velodrome',120,3,{secret:true, addedBy:'mum'});
+  d.claims = {
+    w1:{byPid:'dad', status:'bought', splitPids:['sophie'], updatedAt:t},
+    w4:{byPid:'mum', status:'wrapped', splitPids:[], updatedAt:t},
+    w6:{byPid:'sophie', status:'claimed', splitPids:[], updatedAt:t},
+    w7:{byPid:'mum', status:'claimed', splitPids:[], updatedAt:t},
+    w10:{byPid:'dad', status:'bought', splitPids:['mum'], updatedAt:t},
+    w14:{byPid:'sophie', status:'claimed', splitPids:[], updatedAt:t},
+    s2:{byPid:'sophie', status:'claimed', splitPids:['mum'], updatedAt:t},
+  };
+  S.demo = d; S.demoPriv = {mum:{budgets:{dad:200,sophie:150,jack:120,nana:60},notes:{w4:'Top of the wardrobe, blue bag'}}, dad:{budgets:{},notes:{}}, sophie:{budgets:{mum:100,dad:80},notes:{}}};
+  S.viewAs = 'mum'; S.managing = null; S.mode = 'demo'; render();
+}
+
+/* ---------- boot ---------- */
+function viewCode(){
+  return `<div class="join panel"><h2 style="font-family:var(--f-display);font-weight:700;margin:0 0 4px">Enter your family code</h2>
+  <p class="muted" style="margin:0">Ask whoever set up the list for the code. You only need to type it once on this device.</p>
+  <form data-form="code" class="row" style="align-items:stretch;margin-top:16px"><label for="famCode" style="position:absolute;font-size:0">Family code</label>
+  <input id="famCode" name="code" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="e.g. snowy-reindeer-42" style="flex:1 1 200px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--bg)">
+  <button class="btn primary">Open our list</button></form>
+  <div class="tip"><span>Want a look around first? <button class="btn sm" data-act="demo">Explore an example family</button></span></div></div>`;
+}
+function viewNewFamily(){
+  return `<div class="join panel"><h2 style="font-family:var(--f-display);font-weight:700;margin:0 0 4px">No family uses that code yet</h2>
+  <p class="muted" style="margin:0 0 16px">Check the spelling with whoever set it up. If you’re the first one here, start the family list with this code and share it with everyone.</p>
+  <p style="margin:0 0 16px;font-family:var(--f-mono);font-size:1.05rem;background:var(--bg);padding:8px 12px;border-radius:10px">${esc(S.pendingCode)}</p>
+  <div class="row"><button class="btn primary" data-act="newfam">Start our family list</button><button class="btn" data-act="retrycode">Try a different code</button></div></div>`;
+}
+function viewSetup(){
+  return `<div class="join panel"><h2 style="font-family:var(--f-display);font-weight:700;margin:0 0 4px">Almost ready</h2>
+  <p class="muted" style="margin:0">${esc(S.setupMsg || 'This copy of the app isn’t connected to its database yet.')}</p>
+  <div class="tip"><span>Meanwhile: <button class="btn sm" data-act="demo">Explore an example family</button></span></div></div>`;
+}
+function store(k, v){ try { v === null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch {} }
+function recall(k){ try { return localStorage.getItem(k); } catch { return null; } }
+let FB = null, privUnsub = null, liveUnsubs = [];
+function makeDb(code){
+  const {fs, fdoc, fcol, setDoc, deleteDoc, getDoc, onSnapshot} = FB;
+  const parts = p => ['families', code, ...p.split('/')];
+  const wrap = d => ({ id:d.id, exists:d.exists(), data:()=>d.data(), metadata:d.metadata });
+  return {
+    doc: p => { const ref = fdoc(fs, ...parts(p)); return {
+      set: data => setDoc(ref, data), delete: () => deleteDoc(ref), get: async () => wrap(await getDoc(ref)),
+      onSnapshot: (n, e) => onSnapshot(ref, d => n(wrap(d)), e) }; },
+    collection: p => { const ref = fcol(fs, ...parts(p)); return {
+      onSnapshot: (n, e) => onSnapshot(ref, {includeMetadataChanges:true}, q => n({docs:q.docs.map(wrap), metadata:q.metadata}), e) }; }
+  };
+}
+function choosePerson(pid){
+  S.myPid = pid; store('utt-person', pid); subPriv(); S.mode = 'live'; render();
+}
+function subPriv(){
+  if (privUnsub){ privUnsub(); privUnsub = null; }
+  S.live.priv = {budgets:{}, notes:{}};
+  if (!db || !S.myPid) return;
+  privUnsub = db.doc('private/'+S.myPid).onSnapshot(d => { S.live.priv = {budgets:{}, notes:{}, ...(d.exists ? d.data() : {})}; if (S.mode==='live') render(); }, ()=>{});
+}
+async function openFamily(code, remembered){
+  S.mode = 'loading'; S.slow = false; render();
+  db = makeDb(code);
+  try {
+    const meta = await db.doc('meta/settings').get();
+    if (!meta.exists){
+      if (remembered){ store('utt-code', null); }
+      S.pendingCode = code; S.mode = 'newfam'; render(); return;
+    }
+  } catch(e){
+    console.warn(e); S.mode = 'setup';
+    S.setupMsg = e && e.code === 'permission-denied' ? 'The database refused the connection. In Firebase, check that Anonymous sign-in is switched on and the security rules are published.' : 'Couldn’t reach the family list. Check your internet connection and reload.';
+    render(); return;
+  }
+  S.code = code; store('utt-code', code); subscribe();
+}
+async function startFamily(){
+  const code = S.pendingCode; db = makeDb(code);
+  try { await db.doc('meta/settings').set({currency:'$', createdAt:Date.now()}); }
+  catch(e){ fail(e); return; }
+  S.code = code; store('utt-code', code); toast('Family list started. Share the code with everyone.'); S.mode = 'loading'; subscribe();
+}
+function subscribe(){
+  liveUnsubs.forEach(u => u()); liveUnsubs = [];
+  S.myPid = recall('utt-person');
+  const pending = new Set(['people','wishes','claims']);
+  const timer = setTimeout(() => { if (S.mode === 'loading'){ S.slow = true; render(); } }, 10000);
+  const settle = () => {
+    if (S.mode !== 'loading' || pending.size) return;
+    clearTimeout(timer);
+    S.mode = meId() ? 'live' : 'join';
+    if (S.mode === 'live') subPriv();
+    render();
+  };
+  for (const c of ['people','wishes','claims']){
+    liveUnsubs.push(db.collection(c).onSnapshot(snap => {
+      const o = {}; snap.docs.forEach(d => o[d.id] = d.data()); S.live[c] = o;
+      if (!snap.metadata.fromCache) pending.delete(c);
+      if (S.mode === 'loading') settle(); else if (S.mode === 'live' || S.mode === 'join') render();
+    }, err => { console.warn(err); pending.delete(c); settle(); }));
+  }
+  liveUnsubs.push(db.doc('meta/settings').onSnapshot(d => { S.live.settings = {currency:'$', ...(d.exists ? d.data() : {})}; }, ()=>{}));
+}
+async function boot(){
+  route();
+  let cfg = null;
+  try { cfg = (await import('./firebase-config.js')).firebaseConfig; } catch(e){ console.warn(e); }
+  if (!cfg || !cfg.apiKey || /PASTE/.test(cfg.apiKey)){ S.setupMsg = 'This copy of the app isn’t connected to its database yet. Add the Firebase settings to firebase-config.js.'; S.mode = 'setup'; render(); return; }
+  try {
+    const V = '10.12.2', base = 'https://www.gstatic.com/firebasejs/' + V + '/';
+    const [{initializeApp}, F, A] = await Promise.all([import(base+'firebase-app.js'), import(base+'firebase-firestore.js'), import(base+'firebase-auth.js')]);
+    const app = initializeApp(cfg);
+    FB = {fs: F.getFirestore(app), fdoc: F.doc, fcol: F.collection, setDoc: F.setDoc, deleteDoc: F.deleteDoc, getDoc: F.getDoc, onSnapshot: F.onSnapshot};
+    await A.signInAnonymously(A.getAuth(app));
+  } catch(e){
+    console.warn(e); S.mode = 'setup';
+    S.setupMsg = /admin-restricted|operation-not-allowed/.test(String(e && e.code)) ? 'Anonymous sign-in isn’t switched on yet. In Firebase, go to Authentication → Sign-in method → Anonymous → Enable.' : 'Couldn’t reach the family list. Check your internet connection and reload.';
+    render(); return;
+  }
+  S.liveAvailable = true;
+  const code = recall('utt-code');
+  if (code) await openFamily(code, true); else { S.mode = 'code'; render(); }
+}
+boot();
+})();
+</script>
+</body>
+</html>
