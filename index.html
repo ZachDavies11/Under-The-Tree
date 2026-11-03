@@ -923,6 +923,7 @@ document.addEventListener('click', async e => {
     case 'switchme': store('utt-person', null); S.myPid = null; S.mode = 'join'; location.hash = '#list'; render(); break;
     case 'leavefam': store('utt-code', null); store('utt-person', null); location.hash = ''; location.reload(); break;
     case 'newfam': await startFamily(); break;
+    case 'reload': location.reload(); break;
     case 'retrycode': S.mode = 'code'; S.pendingCode = null; render(); break;
     case 'demo': startDemo(); break;
     case 'real': S.mode = !S.code ? 'code' : meId() ? 'live' : 'join'; render(); break;
@@ -1029,11 +1030,19 @@ function viewNewFamily(){
 function viewSetup(){
   return `<div class="join panel"><h2 style="font-family:var(--f-display);font-weight:700;margin:0 0 4px">Almost ready</h2>
   <p class="muted" style="margin:0">${esc(S.setupMsg || 'This copy of the app isn’t connected to its database yet.')}</p>
+  <div class="row" style="margin-top:14px"><button class="btn primary" data-act="reload">Try again</button><button class="btn" data-act="leavefam">Use a different code</button></div>
+  ${S.setupErr ? `<p class="muted" style="margin:12px 0 0;font-size:.78rem">Error details for Zach: ${esc(S.setupErr)}</p>` : ''}
   <div class="tip"><span>Meanwhile: <button class="btn sm" data-act="demo">Explore an example family</button></span></div></div>`;
 }
 function store(k, v){ try { v === null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch {} }
 function recall(k){ try { return localStorage.getItem(k); } catch { return null; } }
 let FB = null, privUnsub = null, liveUnsubs = [];
+async function signIn(force){
+  const {auth, A} = FB;
+  if (!auth.currentUser) await A.signInAnonymously(auth);
+  await new Promise(r => { const u = A.onAuthStateChanged(auth, x => { if (x){ u(); r(); } }); });
+  await auth.currentUser.getIdToken(!!force);
+}
 function makeDb(code){
   const {fs, fdoc, fcol, setDoc, deleteDoc, getDoc, onSnapshot} = FB;
   const parts = p => ['families', code, ...p.split('/')];
@@ -1059,14 +1068,21 @@ async function openFamily(code, remembered){
   S.mode = 'loading'; S.slow = false; render();
   db = makeDb(code);
   try {
-    const meta = await db.doc('meta/settings').get();
+    let meta;
+    try { meta = await db.doc('meta/settings').get(); }
+    catch(e1){
+      if (!(e1 && e1.code === 'permission-denied')) throw e1;
+      try { await FB.auth.signOut(); } catch {}
+      await signIn(true);
+      meta = await db.doc('meta/settings').get();
+    }
     if (!meta.exists){
       if (remembered){ store('utt-code', null); }
       S.pendingCode = code; S.mode = 'newfam'; render(); return;
     }
   } catch(e){
     console.warn(e); S.mode = 'setup';
-    S.setupMsg = e && e.code === 'permission-denied' ? 'The database refused the connection. In Firebase, check that Anonymous sign-in is switched on and the security rules are published.' : 'Couldn’t reach the family list. Check your internet connection and reload.';
+    S.setupErr = (e && (e.code || e.message)) || 'unknown'; S.setupMsg = e && e.code === 'permission-denied' ? 'The family list didn’t let this phone in. Check the date and time on this phone are set automatically, then tap Try again.' : 'Couldn’t reach the family list. Check your internet connection and reload.';
     render(); return;
   }
   S.code = code; store('utt-code', code); subscribe();
@@ -1108,9 +1124,10 @@ async function boot(){
     const [{initializeApp}, F, A] = await Promise.all([import(base+'firebase-app.js'), import(base+'firebase-firestore.js'), import(base+'firebase-auth.js')]);
     const app = initializeApp(cfg);
     FB = {fs: F.getFirestore(app), fdoc: F.doc, fcol: F.collection, setDoc: F.setDoc, deleteDoc: F.deleteDoc, getDoc: F.getDoc, onSnapshot: F.onSnapshot};
-    await A.signInAnonymously(A.getAuth(app));
+    const auth = A.getAuth(app); FB.auth = auth; FB.A = A;
+    await signIn();
   } catch(e){
-    console.warn(e); S.mode = 'setup';
+    console.warn(e); S.mode = 'setup'; S.setupErr = (e && (e.code || e.message)) || 'unknown';
     S.setupMsg = /admin-restricted|operation-not-allowed/.test(String(e && e.code)) ? 'Anonymous sign-in isn’t switched on yet. In Firebase, go to Authentication → Sign-in method → Anonymous → Enable.' : 'Couldn’t reach the family list. Check your internet connection and reload.';
     render(); return;
   }
