@@ -665,7 +665,8 @@ function viewList(){
   ${live.length ? `<div class="stack">${live.map(w=>tagCard(w,{mode:'owner',showClaims:false})).join('')}</div>`
     : `<div class="empty"><h3>Nothing on the list yet</h3><p>Tap <b>Add a wish</b> above to start ${isMe?'your':esc(possessive(nameOf(target)))} list.</p></div>`}
   ${gone.length ? `<p class="eyebrow">Got it already · hidden from the family</p><div class="stack">${gone.map(w=>tagCard(w,{mode:'owner'})).join('')}</div>` : ''}
-  <div class="tip"><span>Bought something yourself? Tap <b>Got it already</b> instead of deleting it. If someone was already buying it, they get a heads-up.</span></div>`;
+  <div class="tip"><span>Bought something yourself? Tap <b>Got it already</b> instead of deleting it. If someone was already buying it, they get a heads-up.</span></div>
+  ${S.mode === 'live' ? `<div class="tip" style="align-items:center;flex-wrap:wrap"><span style="flex:1 1 200px">Not <b>${esc(nameOf(me))}</b>?</span><button class="btn sm" data-act="switchme">Change user</button></div>` : ''}`;
 }
 function profilePanel(pid, editable){
   const p = P(pid) || {}; const z = p.sizes || {};
@@ -693,7 +694,7 @@ function viewFamily(){
   const add = S.readOnly ? '' : `<button class="person" data-act="addperson"><span class="av lg plus" aria-hidden="true">+</span><h3>Add</h3><div class="sub2">Someone not on the app</div></button>`;
   return `<h2 class="ribbon"><span aria-hidden="true">🎁</span> Who are you shopping for?</h2>
   <div class="grid">${cards}${add}</div>
-  ${S.mode === 'live' ? `<div class="tip" style="margin-top:28px;align-items:center;flex-wrap:wrap"><span style="flex:1 1 220px">On this device you’re <b>${esc(nameOf(me))}</b>.</span><button class="btn sm" data-act="leavefam">Leave this family</button></div>` : ''}
+  ${S.mode === 'live' ? `<div class="tip" style="margin-top:28px;align-items:center;flex-wrap:wrap"><span style="flex:1 1 220px">On this device you’re <b>${esc(nameOf(me))}</b>.</span><button class="btn sm" data-act="switchme">Change user</button><button class="btn sm ghost" data-act="leavefam">Leave this family</button></div>` : ''}
   <div class="tip" style="margin-top:12px"><span>A bow means you’re giving them something. Tap anyone to see their wishes and claim a gift; they’ll never see it.</span></div>`;
 }
 /* ---- One person's list ---- */
@@ -920,7 +921,10 @@ document.addEventListener('click', async e => {
       catch { openSheet(sheetHead('Copy your list','Select all and copy, then paste it into a message.') + `<div class="sheet-body"><label for="copybox" style="position:absolute;font-size:0">List text</label><textarea id="copybox" class="copybox" readonly>${esc(txt)}</textarea></div><div class="sheet-foot"><span class="sp"></span><button class="btn primary" data-act="close">Done</button></div>`); const b=$('#copybox'); b.select(); }
       break; }
     case 'joinas': choosePerson(id); break;
-    case 'switchme': store('utt-person', null); S.myPid = null; S.mode = 'join'; location.hash = '#list'; render(); break;
+    case 'switchme':
+      if (t.dataset.confirm !== '1'){ t.dataset.confirm = '1'; t.textContent = 'Tap again to change user'; setTimeout(() => { if (t.isConnected){ t.dataset.confirm = ''; t.textContent = 'Change user'; } }, 3500); break; }
+      store('utt-person', null); S.myPid = null; if (privUnsub){ privUnsub(); privUnsub = null; } S.live.priv = {budgets:{}, notes:{}};
+      S.mode = 'join'; location.hash = '#list'; window.scrollTo(0,0); render(); toast('Pick the right name to carry on.'); break;
     case 'leavefam': store('utt-code', null); store('utt-person', null); location.hash = ''; location.reload(); break;
     case 'newfam': await startFamily(); break;
     case 'reload': location.reload(); break;
