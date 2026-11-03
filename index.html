@@ -665,8 +665,7 @@ function viewList(){
   ${live.length ? `<div class="stack">${live.map(w=>tagCard(w,{mode:'owner',showClaims:false})).join('')}</div>`
     : `<div class="empty"><h3>Nothing on the list yet</h3><p>Tap <b>Add a wish</b> above to start ${isMe?'your':esc(possessive(nameOf(target)))} list.</p></div>`}
   ${gone.length ? `<p class="eyebrow">Got it already · hidden from the family</p><div class="stack">${gone.map(w=>tagCard(w,{mode:'owner'})).join('')}</div>` : ''}
-  <div class="tip"><span>Bought something yourself? Tap <b>Got it already</b> instead of deleting it. If someone was already buying it, they get a heads-up.</span></div>
-  ${S.mode === 'live' ? `<div class="tip" style="align-items:center;flex-wrap:wrap"><span style="flex:1 1 200px">Not <b>${esc(nameOf(me))}</b>?</span><button class="btn sm" data-act="switchme">Change user</button></div>` : ''}`;
+  <div class="tip"><span>Bought something yourself? Tap <b>Got it already</b> instead of deleting it. If someone was already buying it, they get a heads-up.</span></div>`;
 }
 function profilePanel(pid, editable){
   const p = P(pid) || {}; const z = p.sizes || {};
@@ -1118,7 +1117,7 @@ function subscribe(){
   }
   liveUnsubs.push(db.doc('meta/settings').onSnapshot(d => { S.live.settings = {currency:'$', ...(d.exists ? d.data() : {})}; }, ()=>{}));
 }
-const APP_VERSION = '2026-11-03-2';
+const APP_VERSION = '2026-11-03-3';
 let lastCheck = 0;
 function checkForUpdate(){
   if (Date.now() - lastCheck < 30000) return; lastCheck = Date.now();
