@@ -695,7 +695,7 @@ function viewFamily(){
   return `<h2 class="ribbon"><span aria-hidden="true">🎁</span> Who are you shopping for?</h2>
   <div class="grid">${cards}${add}</div>
   ${S.mode === 'live' ? `<div class="tip" style="margin-top:28px;align-items:center;flex-wrap:wrap"><span style="flex:1 1 220px">On this device you’re <b>${esc(nameOf(me))}</b>.</span><button class="btn sm" data-act="switchme">Change user</button><button class="btn sm ghost" data-act="leavefam">Leave this family</button></div>` : ''}
-  <div class="tip" style="margin-top:12px"><span>A bow means you’re giving them something. Tap anyone to see their wishes and claim a gift; they’ll never see it.</span></div>`;
+  <div class="tip" style="margin-top:12px"><span>A bow means you’re giving them something. Tap anyone to see their wishes and claim a gift; they’ll never see it.<br><small class="muted">App version ${APP_VERSION}</small></span></div>`;
 }
 /* ---- One person's list ---- */
 function viewPerson(pid){
@@ -1118,8 +1118,22 @@ function subscribe(){
   }
   liveUnsubs.push(db.doc('meta/settings').onSnapshot(d => { S.live.settings = {currency:'$', ...(d.exists ? d.data() : {})}; }, ()=>{}));
 }
+const APP_VERSION = '2026-11-03-2';
+let lastCheck = 0;
+function checkForUpdate(){
+  if (Date.now() - lastCheck < 30000) return; lastCheck = Date.now();
+  fetch('version.json?t=' + Date.now(), {cache:'no-store'}).then(r => r.ok ? r.json() : null).then(j => {
+    if (!j || !j.version || j.version === APP_VERSION) return;
+    const k = 'utt-updated-' + j.version;
+    try { if (sessionStorage.getItem(k)) return; sessionStorage.setItem(k, '1'); } catch {}
+    location.replace(location.pathname + '?v=' + encodeURIComponent(j.version) + location.hash);
+  }).catch(() => {});
+}
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') checkForUpdate(); });
+window.addEventListener('focus', checkForUpdate);
 async function boot(){
   route();
+  checkForUpdate();
   let cfg = null;
   try { cfg = (await import('./firebase-config.js')).firebaseConfig; } catch(e){ console.warn(e); }
   if (!cfg || !cfg.apiKey || /PASTE/.test(cfg.apiKey)){ S.setupMsg = 'This copy of the app isn’t connected to its database yet. Add the Firebase settings to firebase-config.js.'; S.mode = 'setup'; render(); return; }
